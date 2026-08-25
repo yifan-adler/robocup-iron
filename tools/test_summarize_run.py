@@ -57,6 +57,20 @@ class BuildSummaryTests(unittest.TestCase):
         )
         self.assertTrue(summary["timed_out"])
 
+    def test_counts_platform_actions_without_duplicate_logs(self):
+        summary = self.build(
+            "# Score: 200\n[Move 9|true]\n",
+            action_text=(
+                "# Results:\n"
+                "\t[Move 5|true]\n"
+                "\t[AskLoc 16|inside(16,6)]\n"
+                "\t[AskLoc 16|not_known]\n"
+                "\t[Sense | 7 19]\n"
+            ),
+        )
+        self.assertEqual(summary["action_count"], 4)
+        self.assertEqual(summary["actions"], {"askloc": 2, "move": 1, "sense": 1})
+
 
 if __name__ == "__main__":
     unittest.main()

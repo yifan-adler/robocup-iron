@@ -9,7 +9,10 @@ from pathlib import Path
 
 
 SCORE_RE = re.compile(r"(?:#\s*score|score\s+is)\s*:\s*(-?\d+)", re.IGNORECASE)
-ACTION_RE = re.compile(r"Executing\s+the\s+action\s*:\s*([A-Za-z_]+)", re.IGNORECASE)
+PLATFORM_ACTION_RE = re.compile(r"^\s*\[([A-Za-z_]+)(?:\s[^|]*)?\|", re.MULTILINE)
+LEGACY_ACTION_RE = re.compile(
+    r"Executing\s+the\s+action\s*:\s*([A-Za-z_]+)", re.IGNORECASE
+)
 
 
 def parse_args():
@@ -38,11 +41,16 @@ def read_logs(run_dir):
 
 
 def build_summary(text, stage, mode, case_id, client, duration_ms,
-                  server_exit, client_exit, server_stopped_by_runner=False):
+                  server_exit, client_exit, server_stopped_by_runner=False,
+                  action_text=None):
     scores = [int(value) for value in SCORE_RE.findall(text)]
     raw_score = scores[-1] if scores else None
     official_score = min(raw_score, 1000) if raw_score is not None else None
-    actions = Counter(name.lower() for name in ACTION_RE.findall(text))
+    action_source = text if action_text is None else action_text
+    action_names = PLATFORM_ACTION_RE.findall(action_source)
+    if not action_names:
+        action_names = LEGACY_ACTION_RE.findall(action_source)
+    actions = Counter(name.lower() for name in action_names)
 
     return {
         "stage": stage,
@@ -66,6 +74,7 @@ def build_summary(text, stage, mode, case_id, client, duration_ms,
 def main():
     args = parse_args()
     text = read_logs(args.run_dir)
+    platform_text = read_logs(args.run_dir / "platform-log")
     summary = build_summary(
         text=text,
         stage=args.stage,
@@ -76,6 +85,7 @@ def main():
         server_exit=args.server_exit,
         client_exit=args.client_exit,
         server_stopped_by_runner=args.server_stopped_by_runner,
+        action_text=platform_text or text,
     )
     output = args.run_dir / "summary.json"
     output.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
