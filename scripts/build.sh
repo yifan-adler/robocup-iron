@@ -39,6 +39,17 @@ if [[ "$client" == "iron" ]]; then
   for file in CMakeLists.txt debuglog.hpp main.cpp parser.cpp parser.hpp rdfw.cpp rdfw.hpp words.txt; do
     cp "$repo_root/src/iron/$file" "$platform/example/$file"
   done
+
+  sdk_patch="$repo_root/infra/patches/iron-plug-timeout.patch"
+  if grep -q $'\r' "$platform/src/plug.cpp"; then
+    sed -i 's/\r$//' "$platform/src/plug.cpp"
+  fi
+  if patch --dry-run --silent --forward -p1 -d "$platform" < "$sdk_patch" >/dev/null 2>&1; then
+    patch --silent --forward -p1 -d "$platform" < "$sdk_patch"
+  elif ! patch --dry-run --silent --reverse -p1 -d "$platform" < "$sdk_patch" >/dev/null 2>&1; then
+    echo "ERROR: Iron SDK timeout patch does not apply cleanly" >&2
+    exit 1
+  fi
 fi
 
 mkdir -p "$build_dir" "$repo_root/.work/environment"
