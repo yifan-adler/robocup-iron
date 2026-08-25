@@ -55,6 +55,19 @@ if [[ ! -f "$tests_dir/$case_id.xml" ]]; then
   echo "ERROR: test case not found: $tests_dir/$case_id.xml" >&2
   exit 1
 fi
+if [[ ! -f "$tests_dir/test.list" ]]; then
+  echo "ERROR: test list not found: $tests_dir/test.list" >&2
+  exit 1
+fi
+
+test_index="$(awk -v target="$case_id.xml" '
+  { sub(/\r$/, "") }
+  $0 == target { print NR }
+' "$tests_dir/test.list")"
+if ! [[ "$test_index" =~ ^[1-9][0-9]*$ ]]; then
+  echo "ERROR: test case $case_id.xml is not uniquely listed in $tests_dir/test.list" >&2
+  exit 1
+fi
 
 run_id="$(date -u +%Y%m%dT%H%M%SZ)-s${stage}-${mode}-${case_id}-${client}-$$"
 run_dir="$repo_root/artifacts/runs/$run_id"
@@ -82,7 +95,7 @@ set +e
     -eval "$platform/lib/libasp" \
     -log "$run_dir/platform-log" \
     -mode "$SERVER_MODE" \
-    -test "$case_id"
+    -test "$test_index"
 ) > "$run_dir/server.log" 2>&1 &
 server_pid=$!
 
