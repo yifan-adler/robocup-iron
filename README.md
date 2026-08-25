@@ -73,16 +73,56 @@ docker compose run --rm dev python3 tools/validate_questions.py tests/problems \
 
 自动校验不能替代官方平台和第二人的语义审查；每个 XML 都会保留一项人工检查提醒。
 
-## 目录导航
+## 仓库结构
 
-- `src/iron/`：可开发客户端；导入基线在 Git 标签中永久保留。
-- `archive/legacy-2025/`：上届原始资料和压缩包，不得直接修改。
-- `infra/docker/`、`compose.yaml`：统一 Ubuntu 18.04 环境。
-- `scripts/`：解压、构建、单题、题集和全员入门脚本。
-- `tests/problems/`：2026 自出题；按 Stage1/Stage2 分类。
-- `tests/manifests/`：smoke 清单和题目复核记录。
-- `docs/`：环境复现、规则差异、17 天节奏和技能问询。
-- `.work/`：平台解压和构建目录；不进入 Git。
+```text
+Robocup/
+├─ README.md                         # 项目入口、运行命令与风险说明
+├─ AGENTS.md                         # 代码边界、测试要求与协作规范
+├─ compose.yaml                      # 统一开发容器入口
+├─ .gitignore                        # 构建、日志和个人环境忽略规则
+├─ .gitattributes                    # 文本换行与二进制文件属性
+├─ src/
+│  └─ iron/                          # 当前可开发的 Iron/RDFW 客户端
+│     ├─ BASELINE.md                 # 基线来源、哈希与导入说明
+│     └─ CMakeLists.txt              # 客户端构建入口
+├─ infra/
+│  └─ docker/
+│     └─ Dockerfile                  # linux/amd64、Ubuntu 18.04 环境
+├─ config/
+│  └─ modes/                         # Stage1/2 × IT/NT 四种固定参数
+├─ scripts/
+│  ├─ doctor.sh                      # 宿主与容器依赖诊断
+│  ├─ bootstrap.sh                   # 校验并解压官方平台
+│  ├─ build.sh                       # 构建 official 或 iron 客户端
+│  ├─ run_case.sh                    # 运行单题并保存独立结果
+│  ├─ run_suite.sh                   # 按 manifest 批量回归
+│  └─ onboard.sh                     # 新队员四模式一键验收
+├─ tools/
+│  ├─ validate_questions.py          # 题库格式与语义静态校验
+│  ├─ test_validate_questions.py     # 校验器单元测试
+│  └─ summarize_run.py               # 汇总逐题运行结果
+├─ tests/
+│  ├─ problems/
+│  │  ├─ stage1/                     # 2026 Stage1 自出题
+│  │  └─ stage2/                     # 2026 Stage2 自出题
+│  ├─ manifests/                     # smoke 清单与题目复核记录
+│  ├─ legacy/                        # 从历史题库筛出的固定回归题
+│  └─ quarantine/                    # 有争议或暂时失败的题目
+├─ docs/
+│  ├─ onboarding/                    # 全员跑通步骤与成员记录模板
+│  ├─ rules/                         # 2025/2026 规则及赛事通知副本
+│  ├─ environment-and-reproduction.md
+│  ├─ rules-diff-2025-2026.md
+│  ├─ team-plan-17-days.md
+│  └─ team-skill-survey.md
+├─ archive/
+│  └─ legacy-2025/                   # 上届原始证据，只读、禁止修改
+├─ .work/                            # 平台解压与构建缓存，不进入 Git
+└─ artifacts/                        # 运行日志、得分与汇总，运行时生成
+```
+
+日常开发主要修改 `src/iron/`、`scripts/`、`tools/`、`tests/` 和 `docs/`。`archive/legacy-2025/` 只用于追溯，`.work/` 与 `artifacts/` 都属于可重新生成的本地内容，不应提交。
 
 ## 进一步阅读
 
