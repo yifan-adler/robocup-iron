@@ -39,6 +39,17 @@ if [[ "$client" == "iron" ]]; then
   for file in CMakeLists.txt debuglog.hpp main.cpp parser.cpp parser.hpp rdfw.cpp rdfw.hpp words.txt; do
     cp "$repo_root/src/iron/$file" "$platform/example/$file"
   done
+
+  sdk_patch="$repo_root/infra/patches/iron-plug-timeout.patch"
+  if grep -q $'\r' "$platform/src/plug.cpp"; then
+    sed -i 's/\r$//' "$platform/src/plug.cpp"
+  fi
+  if patch --dry-run --silent --forward -p1 -d "$platform" < "$sdk_patch" >/dev/null 2>&1; then
+    patch --silent --forward -p1 -d "$platform" < "$sdk_patch"
+  elif ! patch --dry-run --silent --reverse -p1 -d "$platform" < "$sdk_patch" >/dev/null 2>&1; then
+    echo "ERROR: Iron SDK timeout patch does not apply cleanly" >&2
+    exit 1
+  fi
 fi
 
 mkdir -p "$build_dir" "$repo_root/.work/environment"
@@ -51,11 +62,18 @@ mkdir -p "$build_dir" "$repo_root/.work/environment"
 {
   echo "client=$client"
   echo "platform_archive_sha256=fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150"
+  if [[ -r /etc/os-release ]]; then
+    grep -E '^(PRETTY_NAME|VERSION_ID|VERSION_CODENAME)=' /etc/os-release
+  fi
   uname -a
-  gcc --version | head -n 1
-  g++ --version | head -n 1
-  cmake --version | head -n 1
-  dpkg-query -W -f='boost=${Version}\n' libboost-dev 2>/dev/null || true
+  gcc --version | sed -n '1p'
+  g++ --version | sed -n '1p'
+  cmake --version | sed -n '1p'
+  python3 --version
+  unzip -v | sed -n '1p'
+  dpkg-query -W -f='${binary:Package}=${Version}\n' \
+    build-essential cmake coreutils dos2unix git libboost-dev patch procps python3 unzip \
+    2>/dev/null | sort || true
 } > "$repo_root/.work/environment/$client.txt"
 
 if [[ ! -x "$platform/bin/example" || ! -x "$platform/bin/cserver" ]]; then

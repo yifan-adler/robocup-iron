@@ -1,0 +1,50 @@
+--- a/src/plug.cpp
++++ b/src/plug.cpp
+@@ -154,19 +154,33 @@ void Plug::Run()
+                 posix_time::millisec_posix_time_system_config::time_duration_type time_elapse;
+                     
+                 time_begin = posix_time::microsec_clock::universal_time();
+-                boost::thread planner(boost::bind(&Plug::Plan, this));
++                bool planner_joined = false;
++                boost::thread planner([this]() {
++                    try
++                    {
++                        Plan();
++                    }
++                    catch (const std::exception& err)
++                    {
++                        cout << "#(Plug): Planner stopped: " << err.what() << endl;
++                    }
++                });
+                 if (mKernel->mTimeout != 0)
+                 {
+                     try
+                     {
+-                        planner.timed_join(posix_time::milliseconds(mKernel->mTimeout));
++                        planner_joined = planner.timed_join(
++                            posix_time::milliseconds(mKernel->mTimeout));
+                     }
+                     catch (boost::thread_interrupted*)
+                     {
+                     }
+                 }
+                 else
++                {
+                     planner.join();
++                    planner_joined = true;
++                }
+                 time_end = posix_time::microsec_clock::universal_time();
+ 
+                 time_elapse = time_end - time_begin;
+@@ -189,6 +203,11 @@ void Plug::Run()
+                 size = msg->getBody(buffer);
+                 asio::write(*mKernel->mSocket, asio::buffer(buffer.get(), size));
+ 
++                if (!planner_joined)
++                {
++                    planner.join();
++                }
++
+                 Fini();
+             }//if (recv_len)
+         }//while (true)
