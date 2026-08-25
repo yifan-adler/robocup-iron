@@ -1,0 +1,14 @@
+# 由原始资料中的 ZIP、PDF、XLSX 生成。路径相对仓库根目录。
+eb018deb61f58a6f107bf06818399c2dc25db57cbe03c07bba7cebc9951969b7  archive/legacy-2025/代码/代码提升总结.pdf
+09cbe925ab35214571163ecc85fe56207b3aa331b1e7245e1e283ad200887de3  archive/legacy-2025/代码/定时器/example.zip
+9d0d844576174298c490d9eaff48f02d61873b5c3b4883db87460d9ca536d5a0  archive/legacy-2025/代码/doc/2025中国机器人大赛服务机器人仿真项目出题指南 .pdf
+eace94f5f3c25ecdba625879a297d1451e6627ff8e1125a525ef77f82e6fbc06  archive/legacy-2025/代码/doc/5.3赛事规则.服务机器人赛项-服务机器人仿真项目.2025中国机器人大赛暨RoboCup机器人世界杯中国赛(2).pdf
+d73451e7bb8699017309253423321e26a78100ad8cea11d0597cb3bdb9359669  archive/legacy-2025/代码/example_1/example.zip
+fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150  archive/legacy-2025/代码/Planner-release-2025(1).zip
+f787fc7fef9c3abfbcf1b30c29cf40a908cd609305d51fe05d04f18c70664f34  archive/legacy-2025/代码/robocup2025工作日志/计分表my.xlsx
+950efbd84200cee2e4bb78f2c21f83d2cd679fffd326a0c1915962804790e486  archive/legacy-2025/代码/robocup2025工作日志/The Night/17-武汉理工大学-劳动最光荣队.zip
+92a55587420fd48f842514013bb7ae98c06a7fab08cf8913df621e91a87e5e69  archive/legacy-2025/代码/robocup2025工作日志/The Night/example.zip
+5a224c99fb89fb065eea6cf447f515e456f7ac050bacef75676ce636ddebc89a  archive/legacy-2025/代码/robocup2025工作日志/The Night/Stage1_it.xlsx
+e6d8b747395aef97f6c8ab8ec1e8a513c5bf0591324c9fdd8afc96992544f373  archive/legacy-2025/代码/robocup2025工作日志/The Night/tests.zip
+dd1cad8aafe9f4bae4016236ece608f6436b964e08af97a4f2a180e8dccd8785  archive/legacy-2025/代码/stage2国赛/example(15).zip
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+    <info>
+    (hold 10) (plate 11) (at 0 2)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 plant) (size 2 big) (at 2 2)
+    (sort 3 remotecontrol) (size 3 small) (color 3 red) (at 3 2)
+    (sort 4 chair) (size 4 big) (at 4 3)
+    (sort 5 remotecontrol) (size 5 small) (color 5 blue) 
+    (sort 6 remotecontrol) (size 6 small) (color 6 white) 
+    (sort 7 cup) (size 7 small) (color 7 blue) (at 7 2)
+    (sort 8 cup) (size 8 small) (color 8 white) (at 8 2)
+    (sort 9 cup) (size 9 small) (color 9 red) (at 9 2)
+    (sort 10 cup) (size 10 small) (color 10 green)
+    (sort 11 cup) (size 11 small) (color 11 black) 
+    (sort 12 cup) (size 12 small) (color 12 yellow) (at 12 2)
+    (sort 13 bottle) (size 13 small) (color 13 blue) 
+    (sort 14 bottle) (size 14 small) (color 14 white) 
+    (sort 15 bottle) (size 15 small) (color 15 red) 
+    (sort 16 bottle) (size 16 small) (color 16 green) (at 16 3) 
+    (sort 17 bottle) (size 17 small) (color 17 black) (at 17 3) 
+    (sort 18 bottle) (size 18 small) (color 18 yellow) (at 18 6)
+    (sort 19 can) (size 19 small) (color 19 blue) (at 19 3)
+    (sort 20 can) (size 20 small) (color 20 white) (at 20 3)
+    (sort 21 can) (size 21 small) (color 21 red) 
+    (sort 22 can) (size 22 small) (color 22 green) (at 22 2)
+    (sort 23 can) (size 23 small) (color 23 black) (at 23 9)
+    (sort 24 can) (size 24 small) (color 24 yellow) (at 24 2)
+    (sort 25 book) (size 25 small) (color 25 blue) 
+    (sort 26 book) (size 26 small) (color 26 white) 
+    (sort 27 book) (size 27 small) (color 27 red) (at 27 3)
+    (sort 28 microwave) (size 28 big) (at 28 12) (type 28 container) (opened 28)
+    (sort 29 book) (size 29 small) (color 29 black) (at 29 45)
+    (sort 30 book) (size 30 small) (color 30 yellow) (at 30 3)
+    (sort 31 desk) (size 31 big) (at 31 44)
+    </info>
+    <mis>
+      (at 25 3) (at 26 3) (at 13 2) (at 21 2)
+    </mis>
+    <err>
+    <r>(at 5 3) (at 6 3) (at 14 3) (at 15 3)</r>
+    <w>(at 5 12) (at 6 12) (at 14 12) (at 15 12)</w>
+    </err>
+    <extra>
+    </extra>
+</env>
+<instr>
+(:ins
+    (:task (goto X) (:cond (sort X microwave)))
+    (:task (puton X Y) (:cond (sort X book) (color X white) (sort Y plant)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y plant)))
+    (:task (puton X Y) (:cond (sort X book) (color X black) (sort Y desk)))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y chair))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y remotecontrol) (color Y blue))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y bottle) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y bottle) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y bottle) (color Y green))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y bottle) (color Y black))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y can) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y remotecontrol) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y plant))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y remotecontrol) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y blue))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y can) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y blue))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y can) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X green) (sort Y can) (color Y blue))))
+)
+</instr>
+<nl>
+    Go to the microwave. 
+    Put the book which is white on the plant.
+    Put the cup which is black on the plant.
+    Put the book which is black on the desk.
+    The cup which is green must be near the chair.
+    The cup which is green must be near the blue remotecontrol.
+    The cup which is green must be near the white bottle.
+    The cup which is green must be near the red bottle.
+    The cup which is green must be near the green bottle.
+    The cup which is green must be near the black bottle.
+    The cup which is green must be near the white can.
+    The cup which is green must be near the white remotecontrol.
+    The cup which is black must not be near the plant.
+    The cup which is black must not be near the red remotecontrol.
+    The cup which is black must not be near the white cup.
+    The cup which is black must not be near the blue cup.
+    The cup which is black must not be near the red cup.
+    The cup which is black must not be near the yellow cup.
+    The cup which is black must not be near the red can.
+    The cup which is black must not be near the blue cup.
+    The cup which is black must not be near the red cup.
+    The cup which is black must not be near the yellow cup.
+    The cup which is black must not be near the red can.
+    The cup which is green must be near the blue can.
+</nl>
+</test>
+
+

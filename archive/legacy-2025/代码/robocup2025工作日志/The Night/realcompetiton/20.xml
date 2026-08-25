@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+<info>
+    (hold 0) (plate 0) (at 0 2)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 remotecontrol) (size 2 small) (color 2 black) 
+    (sort 3 remotecontrol) (size 3 small) (color 3 red) 
+    (sort 4 remotecontrol) (size 4 small) (color 4 white) 
+    (sort 5 remotecontrol) (size 5 small) (color 5 yellow) (at 5 12)
+    (sort 6 remotecontrol) (size 6 small) (color 6 green) (at 6 11)
+    (sort 7 remotecontrol) (size 7 small) (color 7 blue) (at 7 10)
+    (sort 8 cup) (size 8 small) (color 8 blue) (at 8 9)
+    (sort 9 cup) (size 9 small) (color 9 black) (at 9 8)
+    (sort 10 cup) (size 10 small) (color 10 red) (at 10 7)
+    (sort 11 cup) (size 11 small) (color 11 white) (at 11 7)
+    (sort 12 cup) (size 12 small) (color 12 yellow) (at 12 8)
+    (sort 13 cup) (size 13 small) (color 13 green) (at 13 9)
+    (sort 14 book) (size 14 small) (color 14 black) (at 14 10)
+    (sort 15 book) (size 15 small) (color 15 red) (at 15 11)
+    (sort 16 book) (size 16 small) (color 16 white) (at 16 12)
+    (sort 17 book) (size 17 small) (color 17 yellow) 
+    (sort 18 book) (size 18 small) (color 18 green) 
+    (sort 19 book) (size 19 small) (color 19 blue) 
+    (sort 20 desk) (size 20 big) (at 20 2)  
+    (sort 21 plant) (size 21 big) (at 21 15)  
+    (sort 22 couch) (size 22 big) (at 22 3)    
+    (sort 23 chair) (size 23 big) (at 23 4)        
+</info>
+<mis>
+</mis>
+<err>
+    <r></r>
+    <w></w>
+</err>
+<extra>
+    (at 2 4)
+    (at 3 3)
+    (at 4 15)
+    (at 17 15)
+    (at 18 3)
+    (at 19 4)                    
+</extra>
+</env>
+
+<instr>
+    (:ins
+        (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y chair)))
+        (:info (near X Y) (:cond (sort X remotecontrol) (color X red) (sort Y couch)))
+        (:info (near X Y) (:cond (sort X remotecontrol) (color X white) (sort Y plant)))
+        (:info (near X Y) (:cond (sort X book) (color X yellow) (sort Y plant)))
+        (:info (near X Y) (:cond (sort X book) (color X green) (sort Y couch)))
+        (:info (near X Y) (:cond (sort X book) (color X blue) (sort Y chair))) 
+        (:cons_not (:task (goto X) (:cond (sort X couch))))        
+        (:task (goto X) (:cond (sort X remotecontrol) (color X black)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X red)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X white)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X green)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X blue)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X yellow)))        
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))
+        (:task (goto X) (:cond (sort X book) (color X yellow)))
+        (:task (goto X) (:cond (sort X book) (color X green)))
+        (:task (goto X) (:cond (sort X book) (color X blue)))           
+        (:task (goto X) (:cond (sort X remotecontrol) (color X black)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X red)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X white)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X green)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X blue)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X yellow)))        
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))
+        (:task (goto X) (:cond (sort X book) (color X black)))
+        (:task (goto X) (:cond (sort X book) (color X red)))
+        (:task (goto X) (:cond (sort X book) (color X white)))
+        (:task (goto X) (:cond (sort X book) (color X yellow)))
+        (:task (goto X) (:cond (sort X book) (color X green)))
+        (:task (goto X) (:cond (sort X book) (color X blue)))                                                                                     
+    )
+</instr>
+
+<nl>
+the black remotecontrol is near the chair.
+the red remotecontrol is near the couch.
+the white remotecontrol is near the plant.
+the yellow book is near the plant.
+the green book is near the couch.
+the blue book is near the chair.
+do not go to the couch.
+go to the black remotecontrol.
+go to the red remotecontrol.
+go to the white remotecontrol.
+go to the green remotecontrol.
+go to the blue remotecontrol.
+go to the yellow remotecontrol.
+go to the black cup.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+go to the yellow book.
+go to the green book.
+go to the blue book.
+go to the black remotecontrol.
+go to the red remotecontrol.
+go to the white remotecontrol.
+go to the green remotecontrol.
+go to the blue remotecontrol.
+go to the yellow remotecontrol.
+go to the black cup.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+go to the black book.
+go to the red book.
+go to the white book.
+go to the yellow book.
+go to the green book.
+go to the blue book.
+</nl>
+</test>

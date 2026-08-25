@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+    <env mis="on" err="on" ans="on">
+        <info>
+            (hold 0) (plate 0) (at 0 1)
+            (sort 1 human) (size 1 big) (at 1 1)
+            (sort 2 desk) (size 2 big)  (at 2 3)
+            (sort 3 television) (size 3 big) (at 3 2)
+            (sort 4 chair) (size 4 big) (at 4 5)
+            (sort 5 sofa) (size 5 big)
+            (sort 6 can) (size 6 small) (color 6 white) (at 6 4)
+            (sort 7 can) (size 7 small) (color 7 red) (at 7 4)
+            (sort 8 can) (size 8 small) (color 8 green)
+            (sort 9 can) (size 9 small) (color 9 black)
+            (sort 10 can) (size 10 small) (color 10 blue)
+            (sort 11 can) (size 11 small) (color 11 yellow) (at 11 6)
+            (sort 12 cup) (size 12 small) (color 12 white) (at 12 6)
+            (sort 13 cup) (size 13 small) (color 13 red) (at 13 4)
+            (sort 14 microwave) (size 14 big) (at 14 7) (type 14 container)(closed 14)
+        </info>
+        <mis>
+
+        </mis>
+        <err>
+            <r> (at 5 6) (at 8 3)(at 9 7)(at 10 7)</r>
+            <w> (at 5 4) (at 8 4) (at 9 4) (at 10 4) </w>
+        </err>
+        <extra>
+        </extra>
+    </env>
+    <instr>
+        (:ins
+        (:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+        (:task (putdown X) (:cond  (sort X can) (color X white)))
+        (:task (goto X) (:cond (sort X can) (color X white)))
+        (:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X can) (color X red)))
+        (:task (goto X) (:cond (sort X can) (color X red)))
+        (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X can) (color X green)))
+        (:task (goto X) (:cond (sort X can) (color X green)))
+        (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X can) (color X black)))
+        (:task (goto X) (:cond (sort X can) (color X black)))
+        (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X can) (color X blue)))
+        (:task (goto X) (:cond (sort X can) (color X blue)))
+        (:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X can) (color X yellow)))
+        (:task (goto X) (:cond (sort X can) (color X yellow)))
+        (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y sofa)))
+        (:task (putdown X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X sofa)))
+        (:cons_not (:task (goto X) (:cond (sort X sofa))))
+        (:cons_not (:task (goto X) (:cond (sort X cup) (color X red))))
+        (:task (goto X) (:cond (sort X desk)))
+
+        )
+
+    </instr>
+    <nl>
+        Put the white can on the sofa.
+        put the white can down.
+        go to the white can.
+        Put the red can on the sofa.
+        put the red can down.
+        go to the red can.
+        Put the green can on the sofa.
+        put the green can down.
+        go to the green can.
+        Put the black can on the sofa.
+        put the black can down.
+        go to the black can.
+        Put the blue can on the sofa.
+        put the blue can down.
+        go to the blue can.
+        Put the yellow can on the sofa.
+        put the yellow can down.
+        go to the yellow can.
+        Put the white cup on the sofa.
+        put the white cup down.
+        go to the white cup.
+        go to the sofa.
+        Do not go to the sofa.
+        Do not go to the red cup.
+        Go to the desk.
+    </nl>
+</test>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+<info>
+    (hold 0) (plate 0) (at 0 0)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 remotecontrol) (size 2 small) (color 2 black) (at 2 7)
+    (sort 3 remotecontrol) (size 3 small) (color 3 red) (at 3 8)
+    (sort 4 remotecontrol) (size 4 small) (color 4 white) (at 4 9)
+    (sort 5 remotecontrol) (size 5 small) (color 5 yellow) (at 5 10)
+    (sort 6 remotecontrol) (size 6 small) (color 6 green) (at 6 11)
+    (sort 7 remotecontrol) (size 7 small) (color 7 blue) (at 7 12)
+    (sort 8 cup) (size 8 small) (color 8 black) (at 8 13)
+    (sort 9 book) (size 9 small) (color 9 black) (at 9 14)
+    (sort 10 book) (size 10 small) (color 10 red) (at 10 15)
+    (sort 11 book) (size 11 small) (color 11 white) (at 11 15)
+    (sort 12 book) (size 12 small) (color 12 yellow) (at 12 14)
+    (sort 13 book) (size 13 small) (color 13 green) (at 13 13)
+    (sort 14 book) (size 14 small) (color 14 blue) (at 14 12)
+    (sort 15 cup) (size 15 small) (color 15 red) (at 15 11)
+    (sort 16 cup) (size 16 small) (color 16 white) (at 16 10)
+    (sort 17 cup) (size 17 small) (color 17 yellow) (at 17 9)
+    (sort 18 cup) (size 18 small) (color 18 green) (at 18 8)
+    (sort 19 cup) (size 19 small) (color 19 blue) (at 19 7)
+    (sort 20 chair) (size 20 big) (at 20 2)      
+</info>
+<mis>
+</mis>
+<err>
+    <r></r>
+    <w></w>
+</err>
+<extra>
+    
+</extra>
+</env>
+
+<instr>
+    (:ins
+        (:task (goto X) (:cond (sort X remotecontrol) (color X black)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X red)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X white)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X green)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X blue)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X yellow)))        
+        (:task (goto X) (:cond (sort X book) (color X black)))
+        (:task (goto X) (:cond (sort X book) (color X red)))
+        (:task (goto X) (:cond (sort X book) (color X white)))
+        (:task (goto X) (:cond (sort X book) (color X yellow)))
+        (:task (goto X) (:cond (sort X book) (color X green)))
+        (:task (goto X) (:cond (sort X book) (color X blue)))
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))        
+        (:task (goto X) (:cond (sort X remotecontrol) (color X black)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X red)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X white)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X blue)))
+        (:task (goto X) (:cond (sort X remotecontrol) (color X yellow)))        
+        (:task (goto X) (:cond (sort X book) (color X black)))
+        (:task (goto X) (:cond (sort X book) (color X red)))
+        (:task (goto X) (:cond (sort X book) (color X white)))
+        (:task (goto X) (:cond (sort X book) (color X yellow)))
+        (:task (goto X) (:cond (sort X book) (color X green)))
+        (:task (goto X) (:cond (sort X book) (color X blue)))
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))    
+    )
+</instr>
+
+<nl>
+go to the black remotecontrol.
+go to the red remotecontrol.
+go to the white remotecontrol.
+go to the green remotecontrol.
+go to the blue remotecontrol.
+go to the yellow remotecontrol.
+go to the black cup.
+go to the black book.
+go to the red book.
+go to the white book.
+go to the yellow book.
+go to the green book.
+go to the blue book.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+go to the black remotecontrol.
+go to the red remotecontrol.
+go to the white remotecontrol.
+go to the blue remotecontrol.
+go to the yellow remotecontrol.
+go to the black cup.
+go to the black book.
+go to the red book.
+go to the white book.
+go to the yellow book.
+go to the green book.
+go to the blue book.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+</nl>
+</test>

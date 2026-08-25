@@ -1,0 +1,5 @@
+stage,mode,case,client,tests_dir,timeout
+1,it,01,iron,,60
+1,nt,01,iron,,60
+2,it,01,iron,,60
+2,nt,01,iron,,60

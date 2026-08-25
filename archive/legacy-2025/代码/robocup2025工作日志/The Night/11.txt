@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+  <info>
+(hold 0) (plate 0) (at 0 29133)
+(sort 1 human) (size 1 big) (at 1 19999)
+(sort 2 desk) (size 2 big) (at 2 29999)
+(sort 3 table) (size 3 big) (at 3 39999)
+(sort 4 bed) (size 4 big)
+(sort 5 couch) (size 5 big) (at 5 59999)
+(sort 6 plant) (size 6 big) (at 6 69999)
+(sort 7 chair) (size 7 big) (at 7 79999)
+(sort 8 sofa) (size 8 big) (at 8 89999)
+(sort 9 closet) (size 9 big) (at 9 99999) (type 9 container) (closed 9)
+(sort 10 cupboard) (size 10 big) (at 10 109999) (type 10 container) (closed 10)
+(sort 11 book) (size 11 small) (color 11 white) (at 11 19999)
+(sort 12 book) (size 12 small) (color 12 black)
+(sort 13 book) (size 13 small) (color 13 blue) (at 13 29999)
+(sort 14 book) (size 14 small) (color 14 yellow)
+(sort 15 book) (size 15 small) (color 15 green) (at 15 39999)
+(sort 16 book) (size 16 small) (color 16 red)
+(sort 17 cup) (size 17 small) (color 17 white) (at 17 49999)
+(sort 18 cup) (size 18 small) (color 18 black) (at 18 49999)
+(sort 19 cup) (size 19 small) (color 19 blue) (at 19 59999)
+(sort 20 cup) (size 20 small) (color 20 yellow)
+(sort 21 cup) (size 21 small) (color 21 green) (at 21 69999)
+(sort 22 cup) (size 22 small) (color 22 red) (at 22 69999)
+(sort 23 can) (size 23 small) (color 23 white) (at 23 79999)
+(sort 24 can) (size 24 small) (color 24 black) (at 24 79999)
+(sort 25 can) (size 25 small) (color 25 blue)
+(sort 26 can) (size 26 small) (color 26 yellow) (at 26 89999)
+(sort 27 can) (size 27 small) (color 27 green) (at 27 99999)
+(sort 28 can) (size 28 small) (color 28 red)
+
+  </info>
+
+  <mis>
+	(at 4 49999)
+	(at 14 29999)
+  </mis>
+
+  <err>
+    <r> (at 28 99999) </r>
+    <w>(at 28 19999) </w>
+  </err>
+
+  <extra>
+	(at 12 19999)
+	(at 16 39999)
+	(at 20 59999)
+	(at 25 89999)
+  </extra>
+</env>
+<instr>
+    (:ins
+        (:info (near X Y) (:cond (sort X book) (color X black) (sort Y human)))
+        (:info (on X Y)   (:cond (sort X book) (color X red)   (sort Y table)))
+        (:info (on X Y)   (:cond (sort X cup)  (color X yellow) (sort Y couch)))
+        (:info (on X Y)   (:cond (sort X can)  (color X blue)   (sort Y sofa)))
+        (:task (give human X) (:cond (sort X cup) (color X yellow)))
+        (:cons_not (:task (give human X) (:cond (sort X cup) (color X yellow))))
+        (:cons_not (:task (goto X) (:cond (sort X human))))
+        (:cons_not (:info (near X Y) (:cond (sort X cup) (color X yellow) (sort Y human))))
+        (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y desk)))
+        (:task (putin X Y) (:cond (sort X cup) (color X yellow) (sort Y closet) (type Y container)))
+        (:task (pickup X) (:cond (sort X book) (color X white)))
+        (:task (pickup X) (:cond (sort X book) (color X black)))
+        (:task (pickup X) (:cond (sort X book) (color X blue)))
+        (:task (puton X Y) (:cond (sort X book) (color X red) (sort Y chair)))
+        (:task (puton X Y) (:cond (sort X can)  (color X white) (sort Y chair)))
+        (:task (puton X Y) (:cond (sort X can)  (color X white) (sort Y closet)))
+        (:cons_not (:task (puton X Y) (:cond (sort X can) (color X white) (sort Y closet))))
+        (:cons_not (:info (on X Y)   (:cond (sort X can)  (color X white) (sort Y closet))))
+        (:task (putin X Y) (:cond (sort X cup) (color X red) (sort Y closet) (type Y container)))
+        (:cons_not (:task (putin X Y) (:cond (sort X cup) (color X red) (sort Y closet) (type Y container))))
+        (:cons_not (:info (inside X Y) (:cond (sort X cup) (color X red) (sort Y closet))))
+        (:cons_notnot (:info (on X Y) (:cond (sort X cup) (color X red) (sort Y plant))))
+        (:cons_not (:task (goto X) (:cond (sort X plant))))
+    )
+</instr>
+
+<nl>
+    The black book is next to the human.
+    The red book is on the table.
+    The yellow cup is on the couch.
+    The blue can is on the sofa.
+    Give the human the yellow cup.
+    Do not give the human the yellow cup.
+    Do not go to the human.
+    The yellow cup must not be next to the human.
+    Put the yellow cup on the desk.
+    Put the yellow cup in the closet.
+    Pick the white book up.
+    Pick the black book up.
+    Pick the blue book up.
+    Put the red book on the chair.
+    Put the white can on the chair.
+    Put the white can on the closet.
+    Do not put the white can on the closet.
+    The white can must not be on the closet.
+    Put the red cup in the closet.
+    Do not put the red cup in the closet.
+    The red cup must not be in the closet.
+    The red cup must be on the plant.
+    Do not go to the plant.
+</nl>
+</test>

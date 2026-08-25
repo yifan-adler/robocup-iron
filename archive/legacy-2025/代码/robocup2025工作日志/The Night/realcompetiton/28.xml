@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+<info>
+    (hold 0) (plate 0) (at 0 0)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 can) (size 2 small) (color 2 black) (at 2 15)
+    (sort 3 can) (size 3 small) (color 3 red) (at 3 14)
+    (sort 4 can) (size 4 small) (color 4 white) (at 4 13)
+    (sort 5 can) (size 5 small) (color 5 yellow) (at 5 12)
+    (sort 6 can) (size 6 small) (color 6 green) (at 6 11)
+    (sort 7 can) (size 7 small) (color 7 blue) (at 7 10)
+    (sort 8 cup) (size 8 small) (color 8 blue) (at 8 9)
+    (sort 9 cup) (size 9 small) (color 9 black) (at 9 8)
+    (sort 10 cup) (size 10 small) (color 10 red) (at 10 7)
+    (sort 11 cup) (size 11 small) (color 11 white) (at 11 7)
+    (sort 12 cup) (size 12 small) (color 12 yellow) (at 12 8)
+    (sort 13 cup) (size 13 small) (color 13 green) (at 13 9)
+    (sort 14 bottle) (size 14 small) (color 14 black) (at 14 10)
+    (sort 15 bottle) (size 15 small) (color 15 red) (at 15 11)
+    (sort 16 bottle) (size 16 small) (color 16 white) (at 16 12)
+    (sort 17 bottle) (size 17 small) (color 17 yellow) (at 17 13)
+    (sort 18 bottle) (size 18 small) (color 18 green) (at 18 14)
+    (sort 19 bottle) (size 19 small) (color 19 blue) (at 19 15)
+    (sort 20 desk) (size 20 big) (at 20 2)  
+</info>
+<mis>
+
+</mis>
+<err>
+    <r></r>
+    <w></w>
+</err>
+<extra>
+    
+</extra>
+</env>
+
+<instr>
+    (:ins
+        (:task (goto X) (:cond (sort X can) (color X black)))
+        (:task (goto X) (:cond (sort X can) (color X red)))
+        (:task (goto X) (:cond (sort X can) (color X white)))
+        (:task (goto X) (:cond (sort X can) (color X green)))
+        (:task (goto X) (:cond (sort X can) (color X blue)))
+        (:cons_not (:task (goto X) (:cond (sort X can) (color X blue))))    
+        (:task (goto X) (:cond (sort X can) (color X yellow)))        
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))
+        (:task (goto X) (:cond (sort X bottle) (color X black)))
+        (:task (goto X) (:cond (sort X bottle) (color X red)))
+        (:task (goto X) (:cond (sort X bottle) (color X white)))
+        (:task (goto X) (:cond (sort X bottle) (color X yellow)))
+        (:task (goto X) (:cond (sort X bottle) (color X green)))
+        (:task (goto X) (:cond (sort X bottle) (color X blue)))
+        (:task (goto X) (:cond (sort X can) (color X yellow)))        
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))
+        (:task (goto X) (:cond (sort X cup) (color X yellow)))
+        (:task (goto X) (:cond (sort X cup) (color X green)))
+        (:task (goto X) (:cond (sort X cup) (color X blue)))
+        (:task (goto X) (:cond (sort X bottle) (color X black)))
+        (:task (goto X) (:cond (sort X bottle) (color X red)))
+        (:task (goto X) (:cond (sort X bottle) (color X white)))
+        (:task (goto X) (:cond (sort X bottle) (color X yellow)))
+        (:task (goto X) (:cond (sort X bottle) (color X green)))
+        (:task (goto X) (:cond (sort X bottle) (color X blue)))    
+        (:task (goto X) (:cond (sort X cup) (color X black)))
+        (:task (goto X) (:cond (sort X cup) (color X red)))
+        (:task (goto X) (:cond (sort X cup) (color X white)))                                                                                            
+    )
+</instr>
+
+<nl>
+go to the black can.
+go to the red can.
+go to the white can.
+go to the green can.
+go to the blue can.
+do not go to the blue can. 
+go to the yellow can.
+go to the black cup.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+go to the black bottle.
+go to the red bottle.
+go to the white bottle.
+go to the yellow bottle.
+go to the green bottle.
+go to the blue bottle.
+go to the yellow can.
+go to the black cup.
+go to the red cup.
+go to the white cup.
+go to the yellow cup.
+go to the green cup.
+go to the blue cup.
+go to the black bottle.
+go to the red bottle.
+go to the white bottle.
+go to the yellow bottle.
+go to the green bottle.
+go to the blue bottle.
+go to the black cup.
+go to the red cup.
+go to the white cup.
+</nl>
+</test>

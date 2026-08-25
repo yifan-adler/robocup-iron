@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+    <info>
+    (hold 0) (plate 0) (at 0 4)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 couch) (size 2 big) (at 2 2)
+    (sort 3 table) (size 3 big) (at 3 4)
+    (sort 4 bed) (size 4 big) (at 4 3)
+    (sort 5 washmachine) (size 5 big) (at 5 5)
+    (sort 6 refrigerator) (size 6 big) (at 6 6) (type 6 container) (closed 6)
+    (sort 7 chair) (size 7 big) (at 7 7)
+    (sort 8 couch) (size 8 big) (at 8 8)
+    (sort 9 book) (size 9 small) (color 9 blue) (inside 9 6)
+    (sort 10 book) (size 10 small) (color 10 green) (at 10 7)
+    (sort 11 cup) (size 11 small) (color 11 red) (at 11 8)
+    (sort 12 cup) (size 12 small) (color 12 blue) (inside 12 6)
+    (sort 13 cup) (size 13 small) (color 13 green) (at 13 6)
+    (sort 14 cup) (size 14 small) (color 14 white) (at 14 7)
+    (sort 15 cup) (size 15 small) (color 15 black) (inside 15 6)
+    (sort 16 cup) (size 16 small) (color 16 yellow) (inside 16 6)
+    (sort 17 can) (size 17 small) (color 17 green)
+    (sort 18 can) (size 18 small) (color 18 black)
+    (sort 19 can) (size 19 small) (color 19 blue) (at 19 8)
+    </info>
+    <mis>
+     (at 17 7)
+    </mis>
+    <err>
+        <r>(inside 18 6) </r>
+        <w>(at 18 6) </w>
+    </err>
+    <extra>
+    </extra>
+</env>
+<instr>
+(:ins
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (goto X) (:cond (sort X table)))
+    (:task (pickup X) (:cond (sort X cup) (color X blue)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X cup) (color X yellow) (sort Y couch)))
+    (:task (putin X Y) (:cond (sort X cup) (color X red) (sort Y refrigerator) (type Y container)))
+    (:task (puton X Y) (:cond (sort X cup) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X black) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+    (:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y couch)))
+)
+</instr>
+<nl>
+Go to the table.
+Go to the table.
+Go to the table.
+Go to the table.
+Go to the table.
+Go to the table.
+Go to the table.
+Go to the table.
+Pick up the blue cup.
+put the white cup on couch.
+put the white cup on couch.
+put the white cup on couch.
+put the white cup on couch.
+put the white cup on couch.
+put the white cup on couch.
+put the black cup on couch.
+put the black cup on couch.
+put the black cup on couch.
+put the black cup on couch.
+put the black cup on couch.
+put the black cup on couch.
+put the yellow cup on couch.
+put the yellow cup on couch.
+put the yellow cup on couch.
+put the yellow cup on couch.
+put the yellow cup on couch.
+put the yellow cup on couch.
+put the red cup in the refrigerator.
+put the green cup on the table.
+put the black can on couch.
+put the black can on couch.
+put the black can on couch.
+put the black can on couch.
+put the black can on couch.
+put the black can on couch.
+put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+Put the blue can on couch.
+put the blue can on couch.
+put the blue can on couch.
+</nl>
+</test>

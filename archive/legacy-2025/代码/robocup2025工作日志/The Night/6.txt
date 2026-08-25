@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="off" err="off" ans="off">
+    <info>
+(hold 0) (plate 19) (at 0 0)  
+(sort 1 human) (size 1 big) (at 1 1)  
+
+(sort 2 book) (size 2 small) (color 2 white) (inside 2 3)  
+(sort 3 closet) (size 3 big) (at 3 3) (type 3 container) (closed 3)  
+(sort 4 plant) (size 4 big) (at 4 4)  
+
+(sort 5 book) (size 5 small) (color 5 black) (inside 5 6)  
+(sort 6 cupboard) (size 6 big) (at 6 6) (type 6 container) (closed 6)  
+(sort 7 couch) (size 7 big) (at 7 7)  
+
+(sort 8 book) (size 8 small) (color 8 yellow) (inside 8 9)  
+(sort 9 refrigerator) (size 9 big) (at 9 9) (type 9 container) (closed 9)  
+(sort 10 chair) (size 10 big) (at 10 10)  
+
+(sort 11 book) (size 11 small) (color 11 blue) (inside 11 12)  
+(sort 12 microwave) (size 12 big) (at 12 12) (type 12 container) (closed 12)  
+(sort 13 sofa) (size 13 big) (at 13 13)  
+
+(sort 14 book) (size 14 small) (color 14 green) (at 14 15)  
+(sort 15 workspace) (size 15 big) (at 15 15)  
+(sort 16 airconditioner) (size 16 big) (at 16 16)  
+
+(sort 17 remotecontrol) (size 17 small) (color 17 white) (at 17 16)  
+(sort 18 bottle) (size 18 small) (color 18 white) (at 18 16)  
+(sort 19 can) (size 19 small) (color 19 black)
+(sort 20 cup) (size 20 small) (color 20 white) (at 20 16)  
+
+
+
+        </info>
+    <mis>
+    </mis>
+    <err>
+        <r></r>
+        <w></w>
+    </err>
+    <extra>
+    </extra>
+</env>
+
+<instr>
+    (:ins
+
+(:task (puton X Y) (:cond (sort X book) (color X white) (sort Y plant)))
+(:task (puton X Y) (:cond (sort X book) (color X black) (sort Y couch)))
+(:task (puton X Y) (:cond (sort X book) (color X yellow) (sort Y chair)))
+(:task (puton X Y) (:cond (sort X book) (color X blue) (sort Y sofa)))
+(:task (puton X Y) (:cond (sort X book) (color X green) (sort Y airconditioner)))
+
+(:cons_not (:task (puton X Y) (:cond (sort X book) (color X white) (sort Y plant))))
+(:cons_not (:task (puton X Y) (:cond (sort X book) (color X black) (sort Y couch))))
+(:cons_not (:task (puton X Y) (:cond (sort X book) (color X yellow) (sort Y chair))))
+(:cons_not (:task (puton X Y) (:cond (sort X book) (color X blue) (sort Y sofa))))
+
+(:cons_not (:task (takeout X Y) (:cond (sort X book) (color X white) (sort Y closet) (type Y container))))
+(:cons_not (:task (takeout X Y) (:cond (sort X book) (color X black) (sort Y cupboard) (type Y container))))
+(:cons_not (:task (takeout X Y) (:cond (sort X book) (color X yellow) (sort Y refrigerator) (type Y container))))
+(:cons_not (:task (takeout X Y) (:cond (sort X book) (color X blue) (sort Y microwave) (type Y container))))
+
+(:cons_not (:task (goto X) (:cond (sort X plant))))
+(:cons_not (:task (goto X) (:cond (sort X couch))))
+(:cons_not (:task (goto X) (:cond (sort X chair))))
+(:cons_not (:task (goto X) (:cond (sort X airconditioner))))
+(:cons_not (:task (goto X) (:cond (sort X closet))))
+(:cons_not (:task (goto X) (:cond (sort X cupboard))))
+(:cons_not (:task (goto X) (:cond (sort X refrigerator))))
+(:cons_not (:task (goto X) (:cond (sort X workspace))))
+(:cons_not (:task (goto X) (:cond (sort X microwave))))
+(:cons_not (:task (goto X) (:cond (sort X sofa))))
+
+(:cons_not (:task (open X) (:cond (sort X closet) (type X container))))
+(:cons_not (:task (open X) (:cond (sort X cupboard) (type X container))))
+(:cons_not (:task (open X) (:cond (sort X refrigerator) (type X container))))
+(:cons_not (:task (open X) (:cond (sort X microwave) (type X container))))
+
+(:cons_not (:info (on X Y) (:cond (sort X book) (color X white) (sort Y plant))))
+(:cons_not (:info (on X Y) (:cond (sort X book) (color X black) (sort Y couch))))
+(:cons_not (:info (on X Y) (:cond (sort X book) (color X yellow) (sort Y chair))))
+(:cons_not (:info (on X Y) (:cond (sort X book) (color X blue) (sort Y sofa))))
+
+(:cons_not (:info (near X Y) (:cond (sort X can) (color X white) (sort Y plant))))
+            )
+</instr>
+
+<nl>
+Put the white book on the plant.
+Put the black book on the couch.
+Put the yellow book on the chair.
+Put the blue book on the sofa.
+Put the green book on the airconditioner.
+Do not put the white book on the plant.
+Do not put the black book on the couch.
+Do not put the yellow book on the chair.
+Do not put the blue book on the sofa.
+Do not take out the white book from the closet.
+Do not take out the black book from the cupboard.
+Do not take out the yellow book from the refrigerator.
+Do not take out the blue book from the microwave.
+Do not go to the plant.
+Do not go to the couch.
+Do not go to the chair.
+Do not go to the airconditioner.
+Do not go to the closet.
+Do not go to the cupboard.
+Do not go to the refrigerator.
+Do not go to the workspace.
+Do not go to the microwave.
+Do not go to the sofa.
+Do not open the closet.
+Do not open the cupboard.
+Do not open the refrigerator.
+Do not open the microwave.
+The white book must not be on the plant.
+The black book must not be on the couch.
+The yellow book must not be on the chair.
+The blue book must not be on the sofa.
+The white can must not be near the plant.
+</nl>
+</test>

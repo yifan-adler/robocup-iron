@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+    <info>
+    (hold 0) (plate 19) (at 0 0)
+    (sort 1 human) (size 1 big) (at 1 1)
+ 
+    (sort 2 can) (size 2 small) (color 2 white) (inside 2 3)
+    (sort 3 closet) (size 3 big) (at 3 3) (type 3 container)
+    (sort 4 plant) (size 4 big) (at 4 4) 
+    
+    (sort 5 can) (size 5 small) (color 5 black) (inside 5 6)
+    (sort 6 cupboard) (size 6 big) (at 6 6) (type 6 container)
+    (sort 7 couch) (size 7 big) (at 7 7)
+    
+    (sort 8 can) (size 8 small) (color 8 yellow) (inside 8 9)
+    (sort 9 refrigerator) (size 9 big) (at 9 9) (type 9 container)
+    (sort 10 chair) (size 10 big) (at 10 10)
+    
+    (sort 11 can) (size 11 small) (color 11 blue) (inside 11 12)
+    (sort 12 microwave) (size 12 big) (at 12 12) (type 12 container)
+    (sort 13 sofa) (size 13 big) (at 13 13) 
+    
+    (sort 14 can) (size 14 small) (color 14 green) (at 14 15)
+    (sort 15 workspace) (size 15 big) (at 15 15)
+    (sort 16 table) (size 16 big) (at 16 16)
+    
+    (sort 17 remotecontrol) (size 17 small) (color 17 white) (at 17 16)
+    (sort 18 bottle) (size 18 small) (color 18 white) (at 18 16)  
+    (sort 19 cup) (size 19 small) (color 19 black) 
+    (sort 20 book) (size 20 small) (color 20 white) (at 20 16)
+    </info>
+    <mis> 
+    </mis>
+    <err>
+        <r>(opened 3) (opened 6) (opened 9) (closed 12)</r>
+        <w>(closed 3) (closed 6) (closed 9) (opened 12)</w>
+    </err>
+    <extra>
+    </extra>
+</env>
+<instr>
+(:ins
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (puton X Y) (:cond (sort X can) (color X green) (sort Y table)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X chair)))
+    (:task (goto X) (:cond (sort X closet)))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+
+    
+)
+</instr>
+<nl>
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+Put the green can on the table.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the chair.
+go to the closet.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+The black cup must not be near the table.
+</nl>
+</test>

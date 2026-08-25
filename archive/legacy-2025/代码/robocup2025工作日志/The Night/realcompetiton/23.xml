@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+	<info>
+    (hold 0) (plate 0) (at 0 1)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 desk) (size 2 big)  (at 2 3)
+    (sort 3 television) (size 3 big) (at 3 2)
+    (sort 4 chair) (size 4 big) (at 4 5)
+    (sort 5 sofa) (size 5 big) 
+    (sort 6 can) (size 6 small) (color 6 white) (at 6 4)
+    (sort 7 can) (size 7 small) (color 7 red) (at 7 4)
+    (sort 8 can) (size 8 small) (color 8 green) (at 8 4)
+    (sort 9 can) (size 9 small) (color 9 black) (at 9 4)
+    (sort 10 can) (size 10 small) (color 10 blue) (at 10 4)
+    (sort 11 can) (size 11 small) (color 11 yellow) (at 11 4)
+    (sort 12 cup) (size 12 small) (color 12 white) (at 12 4)
+	(sort 13 bottle) (size 13 small) (color 13 black) (at 13 4)
+	</info>
+	<mis>
+    
+	</mis>
+	<err>
+		<r> (at 5 6) </r>
+		<w> (at 5 4) </w>
+	</err>
+	<extra>
+	</extra>
+</env>
+<instr>
+(:ins 
+	(:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X white) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X red) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X green) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X black) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X blue) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X can) (color X yellow) (sort Y sofa)))
+
+	(:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y sofa)))
+	(:task (puton X Y) (:cond (sort X cup) (color X white) (sort Y sofa)))
+
+    (:cons_not (:task (goto X) (:cond (sort X sofa))))
+
+    (:cons_not (:task (goto X) (:cond (sort X bottle) (color X black))))
+
+	(:task (goto X) (:cond (sort X desk)))
+)
+
+</instr>
+<nl>
+    Put the white can on the sofa.
+    Put the white can on the sofa.
+    Put the white can on the sofa.
+    Put the white can on the sofa.
+    Put the white can on the sofa.
+
+	Put the red can on the sofa.
+	Put the red can on the sofa.
+	Put the red can on the sofa.
+	Put the red can on the sofa.
+	Put the red can on the sofa.
+
+	Put the green can on the sofa.
+	Put the green can on the sofa.
+	Put the green can on the sofa.
+	Put the green can on the sofa.
+	Put the green can on the sofa.
+
+	Put the black can on the sofa.
+	Put the black can on the sofa.
+	Put the black can on the sofa.
+	Put the black can on the sofa.
+	Put the black can on the sofa.
+
+	Put the blue can on the sofa.
+	Put the blue can on the sofa.
+	Put the blue can on the sofa.
+	Put the blue can on the sofa.
+	Put the blue can on the sofa.
+
+	Put the yellow can on the sofa.
+	Put the yellow can on the sofa.
+	Put the yellow can on the sofa.
+	Put the yellow can on the sofa.
+	Put the yellow can on the sofa.
+
+	Put the white cup on the sofa.
+	Put the white cup on the sofa.
+	Put the white cup on the sofa.
+	Put the white cup on the sofa.
+
+	Do not go to the sofa.
+
+	Do not go to the black bottle.
+
+	Go to the desk.
+</nl>
+</test>

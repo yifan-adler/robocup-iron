@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+    <info>
+    (hold 9) (plate 10) (at 0 4) 
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 plant) (size 2 big) (at 2 4)
+    (sort 3 couch) (size 3 big) (at 3 6)
+    (sort 4 closet) (size 4 big) (at 4 2) (type 4 container) (closed 4) 
+    (sort 5 book) (size 5 small) (color 5 white) (at 5 2)
+    (sort 6 can) (size 6 small) (color 6 white) (at 6 2)
+    (sort 7 remotecontrol) (size 7 small) (color 7 white) (at 7 2)
+    (sort 8 bottle) (size 8 small) (color 8 white) (at 8 2)
+    (sort 9 cup) (size 9 small) (color 9 white) 
+    (sort 10 book) (size 10 small) (color 10 black)
+    (sort 11 can) (size 11 small) (color 11 black)(at 11 5)
+    (sort 12 remotecontrol) (size 12 small) (color 12 black) (at 12 6)
+    (sort 13 bottle) (size 13 small) (color 13 black) (at 13 1)
+    (sort 14 cup) (size 14 small) (color 14 black) (at 14 1)
+    (sort 15 book) (size 15 small) (color 15 yellow) (at 15 1)
+    (sort 16 can) (size 16 small) (color 16 green) (at 16 1)
+    (sort 17 can) (size 17 small) (color 17 yellow) (at 17 1)
+    (sort 18 remotecontrol) (size 18 small) (color 18 yellow) (at 18 1)
+    (sort 19 bottle) (size 19 small) (color 19 yellow) (at 19 1)
+    (sort 20 bottle) (size 20 small) (color 20 blue)
+    (sort 21 remotecontrol) (size 21 small) (color 21 blue)
+    </info>
+    <mis>
+    (at 20 12)
+    </mis>
+    <err>
+        <r>(at 21 21)</r>
+        <w>(at 21 22)</w>
+    </err>
+    <extra>
+    </extra>
+</env>
+<instr>
+(:ins
+    (:task (pickup X) (:cond (sort X remotecontrol) (color X black))) 
+    (:task (goto X) (:cond (sort X human))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y bottle) (color Y black)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y cup) (color Y black)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y book) (color Y yellow)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y can) (color Y green)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y can) (color Y yellow)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y remotecontrol) (color Y yellow)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X black) (sort Y bottle) (color Y yellow)))) 
+    (:task (takeout X Y) (:cond (sort X can) (color X black) (sort Y closet) (type Y container)))
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X black) (sort Y book) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X black) (sort Y bottle) (color Y blue)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X black) (sort Y can) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X black) (sort Y remotecontrol) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X black) (sort Y bottle) (color Y white)))) 
+    (:cons_notnot (:info (closed X) (:cond (sort X closet)))) 
+    (:task (puton X Y) (:cond (sort X bottle) (color X black) (sort Y plant)))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X white) (sort Y can) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X white) (sort Y remotecontrol) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X white) (sort Y bottle) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X black) (sort Y book) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X black) (sort Y remotecontrol) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X black) (sort Y bottle) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X black) (sort Y can) (color Y white)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X book) (color X black) (sort Y bottle) (color Y black)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X book) (color X black) (sort Y cup) (color Y black)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X book) (color X black) (sort Y book) (color Y yellow)))) 
+    (:cons_not (:info (near X Y) (:cond (sort X book) (color X black) (sort Y can) (color Y green)))) 
+    (:cons_not (:info (on X Y) (:cond (sort X bottle) (color X black) (sort Y closet))))
+)
+</instr>
+<nl>
+Pick the black remotecontrol up.
+Go to human.
+The black remotecontrol must not be near the black bottle.
+The black remotecontrol must not be near the black cup.
+The black remotecontrol must not be near the yellow book.
+The black remotecontrol must not be near the green can.
+The black remotecontrol must not be near the yellow can.
+The black remotecontrol must not be near the yellow remotecontrol.
+The black remotecontrol must not be near the yellow bottle.
+Take out the black can from the closet.
+The black can must not be near the white book.
+The black can must not be near the blue bottle.
+The black can must not be near the white can.
+The black can must not be near the white remotecontrol.
+The black can must not be near the white bottle.
+The closet must be closed.
+Put the black bottle on the plant.
+The white cup must not be near the white can.
+The white cup must not be near the white remotecontrol.
+The white cup must not be near the white bottle.
+The black bottle must not be near the white book.
+The black bottle must not be near the white remotecontrol.
+The black bottle must not be near the white bottle.
+The black bottle must not be near the white can.
+The black book must not be near the black bottle.
+The black book must not be near the black cup.
+The black book must not be near the yellow book.
+The black book must not be near the green can.
+The black bottle must not be on the closet.
+</nl>
+</test>

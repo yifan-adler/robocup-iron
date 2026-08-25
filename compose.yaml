@@ -1,0 +1,13 @@
+services:
+  dev:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    working_dir: /workspace
+    init: true
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - .:/workspace
+    environment:
+      HOME: /tmp

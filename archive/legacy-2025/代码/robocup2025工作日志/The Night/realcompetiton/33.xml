@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+    <info>
+    (hold 3) (plate 2) (at 0 2)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 bottle) (size 2 small) (color 2 blue)  
+	(sort 3 bottle) (size 3 small) (color 3 black)
+    (sort 4 bottle) (size 4 small) (color 4 white)(at 4 1) 
+    (sort 5 bottle) (size 5 small) (color 5 red)(at 5 2) 
+    (sort 6 bottle) (size 6 small) (color 6 green)(at 6 2) 
+    (sort 7 bottle) (size 7 small) (color 7 yellow)(at 7 2)
+    (sort 8 cup) (size 8 small) (color 8 blue)(at 8 2)  
+	(sort 9 cup) (size 9 small) (color 9 black)(at 9 2)
+    (sort 10 cup) (size 10 small) (color 10 white)(at 10 2) 
+    (sort 11 cup) (size 11 small) (color 11 red) (at 11 2)
+    (sort 12 cup) (size 12 small) (color 12 green)(at 12 2) 
+    (sort 13 cup) (size 13 small) (color 13 yellow)(at 13 2) 
+    (sort 14 book) (size 14 small) (color 14 blue)(at 14 2)  
+	(sort 15 book) (size 15 small) (color 15 black)(at 15 2)
+    (sort 16 book) (size 16 small) (color 16 white)(at 16 2) 
+    (sort 17 book) (size 17 small) (color 17 red)(at 17 2) 
+    (sort 18 book) (size 18 small) (color 18 green)(at 18 2) 
+    (sort 19 book) (size 19 small) (color 19 yellow)(at 19 2) 
+    (sort 20 can) (size 20 small) (color 20 blue)(at 20 2)  
+	(sort 21 can) (size 21 small) (color 21 black)(at 21 2)
+    (sort 22 can) (size 22 small) (color 22 white)(at 22 2) 
+    (sort 23 can) (size 23 small) (color 23 red)(at 23 2) 
+    (sort 24 can) (size 24 small) (color 24 green)(at 24 2) 
+    (sort 25 can) (size 25 small) (color 25 yellow)(at 25 2) 
+    (sort 26 remotecontrol) (size 26 small) (color 26 blue)(at 26 2) 
+    </info>
+    <mis>
+    </mis>
+    <err>
+    </err>
+    <extra>
+    </extra>
+</env>
+<instr>
+(:ins
+	(:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y bottle) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y bottle) (color Y green))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y bottle) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y blue))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y black))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y green))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y cup) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y blue))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y black))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y green))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y book) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y blue))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y black))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y green))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y can) (color Y yellow))))
+    (:cons_not (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y remotecontrol) (color Y blue))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X bottle) (color X blue) (sort Y bottle) (color Y white))))
+    (:task (goto X) (:cond (sort X bottle) (color X white))) 
+    (:task (pickup X) (:cond (sort X bottle) (color X red)))
+)
+</instr>
+<nl>
+	The blue bottle must not be near the red bottle.
+    The blue bottle must not be near the green bottle.
+    The blue bottle must not be near the yellow bottle.
+    The blue bottle must not be near the blue cup.
+    The blue bottle must not be near the black cup.
+    The blue bottle must not be near the white cup.
+    The blue bottle must not be near the red cup.
+    The blue bottle must not be near the green cup.
+    The blue bottle must not be near the yellow cup.
+    The blue bottle must not be near the blue book.
+    The blue bottle must not be near the black book.
+    The blue bottle must not be near the white book.
+    The blue bottle must not be near the red book.
+    The blue bottle must not be near the green book.
+    The blue bottle must not be near the yellow book.
+    The blue bottle must not be near the blue can.
+    The blue bottle must not be near the black can.
+    The blue bottle must not be near the white can.
+    The blue bottle must not be near the red can.
+    The blue bottle must not be near the green can.
+    The blue bottle must not be near the yellow can.
+    The blue bottle must not be near the blue remotecontrol.
+    The blue bottle must be near the white bottle.
+    Go to the white bottle.
+    Pick up the red bottle.
+</nl>
+</test>
