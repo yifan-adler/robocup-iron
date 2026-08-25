@@ -14,8 +14,8 @@
 
 每个人必须完成：
 
-1. 安装并验证 Docker/Compose；
-2. 构建 Ubuntu 18.04 镜像；
+1. 安装并验证 WSL2 Ubuntu 18.04；
+2. 安装并诊断固定编译依赖；
 3. 校验并解压官方平台；
 4. 构建、运行官方 example；
 5. 构建 Iron；
@@ -37,11 +37,11 @@
 
 ### 8/26–8/27：全员环境搭建
 
-- Ubuntu 22.04 安装 Docker Engine；Windows 安装 WSL2 + Docker Desktop。
-- 四人分别运行 `scripts/doctor.sh`、`docker compose build`。
+- Windows 安装独立的 WSL2 Ubuntu 18.04，不覆盖已有发行版。
+- 四人分别运行 `scripts/setup-ubuntu18.sh`、`scripts/doctor.sh`。
 - 记录宿主差异和安装问题，解决方法写入 onboarding 文档。
 
-验收：四台机器都能进入统一容器并看到相同的目标平台路径。
+验收：四台机器都在 Ubuntu 18.04 x86_64 中看到一致的工具链和目标平台路径。
 
 ### 8/28：官方平台基线
 
@@ -106,7 +106,7 @@
 
 ### 9/8：代码和题库冻结
 
-- 清理 Git 状态，固定容器、参数、源码、题库和哈希。
+- 清理 Git 状态，固定 WSL/Ubuntu 工具链、参数、源码、题库和哈希。
 - 完成全量回归并创建 `school-qualifier-2026-rc1`。
 - 导出稳定提交包和上一版本回退包。
 
@@ -132,7 +132,7 @@
 
 - 四份技能问询；
 - 四份 onboarding 记录；
-- Linux/Docker、C++、CMake、Python/XML、测试、规则/现场的实测结果；
+- WSL/Linux、C++、CMake、Python/XML、测试、规则/现场的实测结果；
 - 每人每天可投入时间和比赛当天可用性。
 
 届时为每个领域设置主负责人和备份负责人，并再决定个人出题配额。当前阶段只维护公共任务池，不在本文档中写死人名或专业对应角色。

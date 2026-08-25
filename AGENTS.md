@@ -33,8 +33,9 @@
 修改环境或构建脚本：
 
 ```bash
-docker compose build
-docker compose run --rm dev ./scripts/onboard.sh
+./scripts/setup-ubuntu18.sh
+./scripts/doctor.sh
+./scripts/onboard.sh
 ```
 
 修改题库校验器：
@@ -47,8 +48,8 @@ python3 tools/validate_questions.py tests/problems
 修改 Iron 行为：
 
 ```bash
-docker compose run --rm dev ./scripts/build.sh --client iron
-docker compose run --rm dev ./scripts/run_suite.sh --manifest tests/manifests/smoke.csv
+./scripts/build.sh --client iron
+./scripts/run_suite.sh --manifest tests/manifests/smoke.csv
 ```
 
 取得正式回归清单后，还必须运行全量清单并对比逐题 `summary.json`。

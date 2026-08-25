@@ -62,11 +62,18 @@ mkdir -p "$build_dir" "$repo_root/.work/environment"
 {
   echo "client=$client"
   echo "platform_archive_sha256=fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150"
+  if [[ -r /etc/os-release ]]; then
+    grep -E '^(PRETTY_NAME|VERSION_ID|VERSION_CODENAME)=' /etc/os-release
+  fi
   uname -a
-  gcc --version | head -n 1
-  g++ --version | head -n 1
-  cmake --version | head -n 1
-  dpkg-query -W -f='boost=${Version}\n' libboost-dev 2>/dev/null || true
+  gcc --version | sed -n '1p'
+  g++ --version | sed -n '1p'
+  cmake --version | sed -n '1p'
+  python3 --version
+  unzip -v | sed -n '1p'
+  dpkg-query -W -f='${binary:Package}=${Version}\n' \
+    build-essential cmake coreutils dos2unix git libboost-dev patch procps python3 unzip \
+    2>/dev/null | sort || true
 } > "$repo_root/.work/environment/$client.txt"
 
 if [[ ! -x "$platform/bin/example" || ! -x "$platform/bin/cserver" ]]; then

@@ -18,7 +18,7 @@
 |---|---:|---|
 | Linux 命令行 | | |
 | Git 分支、合并和回退 | | |
-| Docker/容器 | | |
+| WSL2、Ubuntu 与 Linux 环境 | | |
 | C++11、STL、指针生命周期 | | |
 | CMake、编译和链接 | | |
 | gdb、ASan/UBSan | | |
