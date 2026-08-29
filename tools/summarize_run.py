@@ -8,8 +8,9 @@ from collections import Counter
 from pathlib import Path
 
 
-SCORE_RE = re.compile(r"score\s+is\s*:\s*(-?\d+)", re.IGNORECASE)
+SCORE_RE = re.compile(r"\bscore(?:\s+is)?\s*:\s*(-?\d+)", re.IGNORECASE)
 ACTION_RE = re.compile(r"Executing\s+the\s+action\s*:\s*([A-Za-z_]+)", re.IGNORECASE)
+SERVER_ACTION_RE = re.compile(r"^\s*\[([A-Za-z_][A-Za-z0-9_]*)\b", re.MULTILINE)
 
 
 def parse_args():
@@ -42,7 +43,12 @@ def main():
     scores = [int(value) for value in SCORE_RE.findall(text)]
     raw_score = scores[-1] if scores else None
     official_score = min(raw_score, 1000) if raw_score is not None else None
-    actions = Counter(name.lower() for name in ACTION_RE.findall(text))
+    try:
+        server_text = (args.run_dir / "server.log").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        server_text = ""
+    action_names = SERVER_ACTION_RE.findall(server_text) or ACTION_RE.findall(text)
+    actions = Counter(name.lower() for name in action_names)
 
     summary = {
         "stage": args.stage,

@@ -11,8 +11,7 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
-from collections import Counter, defaultdict
-from dataclasses import asdict, dataclass
+from collections import Counter, defaultdict, namedtuple
 from pathlib import Path
 
 
@@ -20,12 +19,7 @@ TOKEN_RE = re.compile(r"\(|\)|[^\s()]+")
 FACT_RE = re.compile(r"\(([A-Za-z_]+)\s+([^()]*)\)")
 
 
-@dataclass
-class Diagnostic:
-    severity: str
-    path: str
-    code: str
-    message: str
+Diagnostic = namedtuple("Diagnostic", "severity path code message")
 
 
 class SExprError(ValueError):
@@ -344,7 +338,7 @@ def main(argv=None):
         "errors": sum(item.severity == "error" for item in diagnostics),
         "warnings": sum(item.severity == "warning" for item in diagnostics),
         "manual_checks": sum(item.severity == "manual" for item in diagnostics),
-        "diagnostics": [asdict(item) for item in diagnostics],
+        "diagnostics": [dict(item._asdict()) for item in diagnostics],
     }
     if args.json_output:
         args.json_output.parent.mkdir(parents=True, exist_ok=True)
