@@ -1,0 +1,17 @@
+--- a/src/plug.cpp
++++ b/src/plug.cpp
+@@ -156,7 +156,13 @@
+                 {
+                     try
+                     {
+-                        planner.timed_join(posix_time::milliseconds(mKernel->mTimeout));
++                        if (!planner.timed_join(posix_time::milliseconds(mKernel->mTimeout)))
++                        {
++                            // Do not let a timed-out planning thread outlive the
++                            // client object or keep using a closed server socket.
++                            // run_case.sh still provides the outer hard timeout.
++                            planner.join();
++                        }
+                     }
+                     catch (boost::thread_interrupted*)
+                     {

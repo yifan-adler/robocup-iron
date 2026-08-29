@@ -39,6 +39,17 @@ if [[ "$client" == "iron" ]]; then
   for file in CMakeLists.txt debuglog.hpp main.cpp parser.cpp parser.hpp rdfw.cpp rdfw.hpp words.txt; do
     cp "$repo_root/src/iron/$file" "$platform/example/$file"
   done
+
+  platform_patch="$repo_root/infra/platform-patches/iron-planner-thread.patch"
+  if grep -Fq 'if (!planner.timed_join(posix_time::milliseconds(mKernel->mTimeout)))' "$platform/src/plug.cpp"; then
+    : # Already patched by an earlier build.
+  elif grep -Fq 'planner.timed_join(posix_time::milliseconds(mKernel->mTimeout));' "$platform/src/plug.cpp"; then
+    sed -i 's/\r$//' "$platform/src/plug.cpp"
+    patch --batch --forward --silent -p1 -d "$platform" < "$platform_patch"
+  else
+    echo "ERROR: Iron platform timeout patch does not match $platform/src/plug.cpp" >&2
+    exit 1
+  fi
 fi
 
 mkdir -p "$build_dir" "$repo_root/.work/environment"
