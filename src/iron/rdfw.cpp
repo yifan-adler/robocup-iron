@@ -15,6 +15,12 @@
 using namespace _home;
 using namespace std;
 
+namespace {
+// A goal is worth 40 points while each Ask costs 2. Five attempts leave room
+// for Stage 2 answer noise without allowing an unbounded scoring/time drain.
+const int kMaxAskAttemptsPerQuery = 5;
+}
+
 void split_string(vector<string> &out, const string &str_source, char mark);
 ostream &operator<<(ostream &os, shared_ptr<Object> obj);
 ostream &operator<<(ostream &os, shared_ptr<SyntaxNode> sn);
@@ -573,7 +579,6 @@ void RDFW::ExecuteCheckPhase(bool defer_multi_goto)
         }
     }
 }
-
 
 
 
@@ -2353,13 +2358,11 @@ bool RDFW::ZeroActionPreCheck(Instruction& t)
     auto try_ask_small = [&](unsigned id){
         if (asked) return;
         GetSmallObjectStatus(id);
-        t.ask_times++;      // 复用已有 ask 次数字段
         asked = true;
     };
     auto try_ask_big = [&](unsigned id){
         if (asked) return;
         GetBigObjectStatus(id);
-        t.ask_times++;
         asked = true;
     };
     auto try_sense_obj = [&](unsigned id){
@@ -2426,37 +2429,43 @@ bool RDFW::ZeroActionPreCheck(Instruction& t)
 //获取小物体状态---无返回值，直接更新状态
 void RDFW::GetSmallObjectStatus(unsigned int a)
 {
-    tasks[task_index].ask_times++;
+    if (task_index < static_cast<int>(tasks.size()))
+        tasks[task_index].ask_times++;
     if (isPass)
         return;
 
     string sureRet;
-    if (isErrorCorrection && isAskTwice)
+    vector<string> replies;
+    for (int attempt = 0; attempt < kMaxAskAttemptsPerQuery; ++attempt)
     {
-        vector<string> ret;
-        // 纠错模式下反复问，直到问出两次相同结果,认为正确。
-        auto checkDouble = [&](const string &str) -> bool
+        const string answer = AskLoc(a);
+        if (answer.empty() || answer == "not_known")
+            continue;
+        if (answer.find("at") != 0 && answer.find("inside") != 0)
         {
-            for (const auto &v : ret)
-                if (v == str)
-                {
-                    sureRet = str;
-                    return true;
-                }
-            ret.push_back(str);
-            return false;
-        };
-        while (checkDouble(AskLoc(a)) == false)
-        {
+            LOG_ERROR("AskLoc(%d) returned unsupported small-object answer: %s",
+                      a, answer.c_str());
+            continue;
         }
-    }
-    else
-    {
-        sureRet = AskLoc(a);
+
+        if (!(isErrorCorrection && isAskTwice))
+        {
+            sureRet = answer;
+            break;
+        }
+
+        if (find(replies.begin(), replies.end(), answer) != replies.end())
+        {
+            sureRet = answer;
+            break;
+        }
+        replies.push_back(answer);
     }
 
-    if (sureRet == "")
+    if (sureRet.empty())
     {
+        LOG_ERROR("AskLoc(%d) did not produce a reliable answer within %d attempts",
+                  a, kMaxAskAttemptsPerQuery);
         isPass = true;
         return;
     }
@@ -2470,20 +2479,62 @@ void RDFW::GetSmallObjectStatus(unsigned int a)
         split.push_back(m.str());
     }
 
-    auto small = ObjectPtrCast<SmallObject>(objects[stoi(split[1])]);
+    if (split.size() < 3)
+    {
+        LOG_ERROR("AskLoc(%d) returned malformed answer: %s", a, sureRet.c_str());
+        isPass = true;
+        return;
+    }
+
+    int answerObjectId = UNKNOWN;
+    int answerValue = UNKNOWN;
+    try
+    {
+        answerObjectId = stoi(split[1]);
+        answerValue = stoi(split[2]);
+    }
+    catch (const std::exception &)
+    {
+        LOG_ERROR("AskLoc(%d) returned non-numeric answer: %s", a, sureRet.c_str());
+        isPass = true;
+        return;
+    }
+
+    if (answerObjectId != static_cast<int>(a) || a >= objects.size())
+    {
+        LOG_ERROR("AskLoc(%d) returned mismatched object id %d", a, answerObjectId);
+        isPass = true;
+        return;
+    }
+
+    auto small = ObjectPtrCast<SmallObject>(objects[a]);
+    if (!small)
+    {
+        LOG_ERROR("AskLoc(%d) target is not a small object", a);
+        isPass = true;
+        return;
+    }
 
     if (split[0] == "inside")
     {
-        auto cont = dynamic_pointer_cast<Container>(objects[stoi(split[2])]);
+        if (answerValue <= 0 || answerValue >= static_cast<int>(objects.size()))
+        {
+            LOG_ERROR("AskLoc(%d) returned invalid container id %d", a, answerValue);
+            isPass = true;
+            return;
+        }
+        auto cont = dynamic_pointer_cast<Container>(objects[answerValue]);
         if (cont == nullptr){
             cout<<"The object is not a container!"<<endl;
-            return GetSmallObjectStatus(a);
+            isPass = true;
+            return;
         }
 
        //small->location = cont->location;
         //10.23日改
 
       if(cont->location==UNKNOWN) GetBigObjectStatus(cont->id);
+      if(isPass || cont->location==UNKNOWN) return;
       small->location = cont->location;
 
         //10.23日改
@@ -2493,7 +2544,13 @@ void RDFW::GetSmallObjectStatus(unsigned int a)
 
     else if (split[0] == "at")
     {
-        small->location = stoi(split[2]);
+        if (answerValue < 0)
+        {
+            LOG_ERROR("AskLoc(%d) returned invalid location %d", a, answerValue);
+            isPass = true;
+            return;
+        }
+        small->location = answerValue;
         if(small->inside>0){  //如果回答at，认为在地上，如果之前认为在容器里面，就要清除
              auto cont = dynamic_pointer_cast<Container>(objects[small->inside]);
              cont->DeleteObjectInside(small);
@@ -2501,22 +2558,45 @@ void RDFW::GetSmallObjectStatus(unsigned int a)
         small->inside = NONE;
 
     }
-    if (isErrorCorrection)
+    else
+    {
+        LOG_ERROR("AskLoc(%d) returned unsupported relation: %s", a, split[0].c_str());
+        isPass = true;
+        return;
+    }
+    if (isErrorCorrection && small->location != UNKNOWN)
+    {
         EnsureLocationCapacity(small->location);
-
         posCorrectFlag[small->location] = false;
+    }
 }
 
 //获取大物体状态---无返回值，直接更新状态
 void RDFW::GetBigObjectStatus(unsigned int a)
 {
-    tasks[task_index].ask_times++;
+    if (task_index < static_cast<int>(tasks.size()))
+        tasks[task_index].ask_times++;
     if (isPass)
         return;
     string sureRet;
-    sureRet = AskLoc(a);
-    if (sureRet == "")
+    for (int attempt = 0; attempt < kMaxAskAttemptsPerQuery; ++attempt)
     {
+        const string answer = AskLoc(a);
+        if (answer.empty() || answer == "not_known")
+            continue;
+        if (answer.find("at") != 0)
+        {
+            LOG_ERROR("AskLoc(%d) returned unsupported big-object answer: %s",
+                      a, answer.c_str());
+            continue;
+        }
+        sureRet = answer;
+        break;
+    }
+    if (sureRet.empty())
+    {
+        LOG_ERROR("AskLoc(%d) did not produce an answer within %d attempts",
+                  a, kMaxAskAttemptsPerQuery);
         isPass = true;
         return;
     }
@@ -2531,9 +2611,37 @@ void RDFW::GetBigObjectStatus(unsigned int a)
     }
 
 
-    if (split[0] == "at")
+    if (split.size() < 3)
     {
-        objects[a]->location = stoi(split[2]);
+        LOG_ERROR("AskLoc(%d) returned malformed answer: %s", a, sureRet.c_str());
+        isPass = true;
+        return;
+    }
+
+    int answerObjectId = UNKNOWN;
+    int answerLocation = UNKNOWN;
+    try
+    {
+        answerObjectId = stoi(split[1]);
+        answerLocation = stoi(split[2]);
+    }
+    catch (const std::exception &)
+    {
+        LOG_ERROR("AskLoc(%d) returned non-numeric answer: %s", a, sureRet.c_str());
+        isPass = true;
+        return;
+    }
+
+    if (answerObjectId != static_cast<int>(a) || a >= objects.size() || !objects[a])
+    {
+        LOG_ERROR("AskLoc(%d) returned mismatched object id %d", a, answerObjectId);
+        isPass = true;
+        return;
+    }
+
+    if (split[0] == "at" && answerLocation >= 0)
+    {
+        objects[a]->location = answerLocation;
     if(dynamic_pointer_cast<Container>(objects[a])!=nullptr)
     {
         auto cont=dynamic_pointer_cast<Container>(objects[a]);
@@ -2544,8 +2652,9 @@ void RDFW::GetBigObjectStatus(unsigned int a)
     }
     }
     else {
-        cout<<"The Big Object cant in container!!!!"<<endl;
-        return GetBigObjectStatus(a);
+        LOG_ERROR("AskLoc(%d) returned invalid big-object answer: %s", a, sureRet.c_str());
+        isPass = true;
+        return;
     }
     // if (isErrorCorrection)
     //     posCorrectFlag[small->location] = false;
@@ -2556,16 +2665,16 @@ std::string RDFW::AskLoc(unsigned int a)
 {
     if (isPass)
         return "";
-    string str;
-    do
+    if (a >= objects.size() || !objects[a])
     {
-        str = Plug::AskLoc(a);
-        LOG("AskLoc(%d)", a);
-        if (str == "")
-        {
-            LOG_ERROR("AskLoc return empty string,may object (%d,%s) not exsit!", a, objects[a]->sort.c_str());
-        }
-    } while (str == "not_known");
+        LOG_ERROR("AskLoc target object %d does not exist", a);
+        return "";
+    }
+
+    const string str = Plug::AskLoc(a);
+    LOG("AskLoc(%d)", a);
+    if (str.empty())
+        LOG_ERROR("AskLoc return empty string,may object (%d,%s) not exsit!", a, objects[a]->sort.c_str());
     return str;
 }
 
@@ -4409,6 +4518,4 @@ void RDFW::ApplyOpenCloseCorrection() {
         // 无约束不处理
     }
 }
-
-
 
