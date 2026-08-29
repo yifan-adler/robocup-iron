@@ -1415,7 +1415,7 @@ bool RDFW::SolveTask_Open(unsigned int a)
         GetBigObjectStatus(a);
         if(!IsKeepingGoing(task_index)) return 0;
     }
-     int t;
+     int t = 0;
     while(1)
     {
         t++;
@@ -1464,7 +1464,7 @@ bool RDFW::SolveTask_Close(unsigned int a)
         GetBigObjectStatus(a);
         if(!IsKeepingGoing(task_index)) return 0;
     }
-     int t;
+     int t = 0;
     while(1)
     {
         t++;
