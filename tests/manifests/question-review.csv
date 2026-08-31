@@ -1,1 +1,13 @@
 file,stage,author,reviewer,status,notes
+stage2/01.xml,2,Codex-assisted,,pending,MustNear correction anchor
+stage2/02.xml,2,Codex-assisted,,pending,MustNear correction anchor
+stage2/03.xml,2,Codex-assisted,,pending,MustNear correction anchor
+stage2/04.xml,2,Codex-assisted,,pending,MustNear correction anchor
+stage2/05.xml,2,Codex-assisted,,pending,Two missing locations and multi-goto aggregation
+stage2/06.xml,2,Codex-assisted,,pending,Three missing locations and multi-goto aggregation
+stage2/07.xml,2,Codex-assisted,,pending,Four missing locations and multi-goto aggregation
+stage2/08.xml,2,Codex-assisted,,pending,Selective pickup with constraint preservation
+stage2/09.xml,2,Codex-assisted,,pending,Selective pickup with constraint preservation
+stage2/10.xml,2,Codex-assisted,,pending,Container task conflict filtering
+stage2/11.xml,2,Codex-assisted,,pending,Container task conflict filtering
+stage2/12.xml,2,Codex-assisted,,pending,Missing-location hybrid multi-goto

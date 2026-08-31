@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+  <info>
+    (hold 0) (plate 0) (at 0 0)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 desk) (size 2 big) (at 2 3)
+    (sort 3 sofa) (size 3 big) (at 3 3)
+    (sort 4 chair) (size 4 big) (at 4 3)
+    (sort 5 table) (size 5 big) (at 5 3)
+    (sort 6 workspace) (size 6 big) (at 6 3)
+    (sort 7 worktable) (size 7 big) (at 7 3)
+    (sort 8 cup) (size 8 small) (color 8 white) (at 8 7)
+    (sort 9 can) (size 9 small) (color 9 red) (at 9 3)
+    (sort 10 bottle) (size 10 small) (color 10 blue) (at 10 3)
+    (sort 11 book) (size 11 small) (color 11 green) (at 11 3)
+    (sort 12 remotecontrol) (size 12 small) (color 12 yellow) (at 12 7)
+    (sort 13 cup) (size 13 small) (color 13 black) (at 13 7)
+    (sort 14 can) (size 14 small) (color 14 white) (at 14 7)
+    (sort 15 bottle) (size 15 small) (color 15 red) (at 15 7)
+    (sort 16 book) (size 16 small) (color 16 blue) (at 16 7)
+    (sort 17 remotecontrol) (size 17 small) (color 17 green) (at 17 7)
+  </info>
+  <mis>
+
+  </mis>
+  <err>
+    <r>
+
+    </r>
+    <w>
+
+    </w>
+  </err>
+  <extra>
+  </extra>
+</env>
+<instr>
+(:ins
+    (:task (pickup X) (:cond (sort X cup) (color X white)))
+    (:task (pickup X) (:cond (sort X can) (color X red)))
+    (:task (pickup X) (:cond (sort X bottle) (color X blue)))
+    (:task (pickup X) (:cond (sort X book) (color X green)))
+    (:cons_not (:task (pickup X) (:cond (sort X can) (color X red))))
+    (:cons_not (:task (pickup X) (:cond (sort X bottle) (color X blue))))
+    (:cons_not (:task (pickup X) (:cond (sort X book) (color X green))))
+    (:cons_not (:task (goto X) (:cond (sort X desk))))
+    (:cons_not (:task (goto X) (:cond (sort X sofa))))
+    (:cons_not (:task (goto X) (:cond (sort X chair))))
+    (:cons_not (:task (goto X) (:cond (sort X table))))
+    (:cons_not (:task (goto X) (:cond (sort X workspace))))
+    (:cons_not (:task (goto X) (:cond (sort X worktable))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X remotecontrol) (color X yellow) (sort Y cup) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y cup) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X can) (color X white) (sort Y cup) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X bottle) (color X red) (sort Y cup) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X book) (color X blue) (sort Y cup) (color Y white))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X remotecontrol) (color X green) (sort Y cup) (color Y white))))
+    (:cons_not (:info (near X Y) (:cond (sort X remotecontrol) (color X yellow) (sort Y human))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y chair))))
+    (:cons_not (:info (near X Y) (:cond (sort X can) (color X white) (sort Y table))))
+)
+</instr>
+<nl>
+Pick up the white cup.
+Pick up the red can.
+Pick up the blue bottle.
+Pick up the green book.
+Do not pick up the red can.
+Do not pick up the blue bottle.
+Do not pick up the green book.
+Do not go to the desk.
+Do not go to the sofa.
+Do not go to the chair.
+Do not go to the table.
+Do not go to the workspace.
+Do not go to the worktable.
+The yellow remotecontrol must be near the white cup.
+The black cup must be near the white cup.
+The white can must be near the white cup.
+The red bottle must be near the white cup.
+The blue book must be near the white cup.
+The green remotecontrol must be near the white cup.
+The yellow remotecontrol must not be near the human.
+The black cup must not be near the chair.
+The white can must not be near the table.
+</nl>
+</test>
