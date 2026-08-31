@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+  <info>
+    (hold 0) (plate 0) (at 0 1)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 refrigerator) (size 2 big) (at 2 2) (type 2 container) (opened 2)
+    (sort 3 bottle) (size 3 small) (color 3 green)
+    (sort 4 desk) (size 4 big) (at 4 3)
+  </info>
+  <mis></mis>
+  <err>
+    <r>(inside 3 2)</r>
+    <w>(at 3 3)</w>
+  </err>
+  <extra></extra>
+</env>
+<instr>
+(:ins
+  (:task (takeout X Y) (:cond (sort X bottle) (color X green) (sort Y refrigerator) (type Y container)))
+)
+</instr>
+<nl>
+Take out the green bottle from the refrigerator.
+</nl>
+</test>
