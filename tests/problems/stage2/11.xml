@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test>
+<env mis="on" err="on" ans="on">
+  <info>
+    (hold 0) (plate 0) (at 0 0)
+    (sort 1 human) (size 1 big) (at 1 1)
+    (sort 2 refrigerator) (size 2 big) (at 2 3) (type 2 container) (closed 2)
+    (sort 3 microwave) (size 3 big) (at 3 3) (type 3 container) (closed 3)
+    (sort 4 cupboard) (size 4 big) (at 4 3) (type 4 container) (opened 4)
+    (sort 5 desk) (size 5 big) (at 5 3)
+    (sort 6 sofa) (size 6 big) (at 6 3)
+    (sort 7 worktable) (size 7 big) (at 7 7)
+    (sort 8 can) (size 8 small) (color 8 red) (at 8 7)
+    (sort 9 bottle) (size 9 small) (color 9 green) (at 9 3)
+    (sort 10 remotecontrol) (size 10 small) (color 10 yellow) (at 10 3)
+    (sort 11 cup) (size 11 small) (color 11 white) (at 11 7)
+    (sort 12 book) (size 12 small) (color 12 blue) (at 12 7)
+    (sort 13 cup) (size 13 small) (color 13 black) (at 13 7)
+    (sort 14 bottle) (size 14 small) (color 14 white) (at 14 7)
+    (sort 15 book) (size 15 small) (color 15 green) (at 15 7)
+    (sort 16 chair) (size 16 big) (at 16 4)
+    (sort 17 table) (size 17 big) (at 17 5)
+    (sort 18 workspace) (size 18 big) (at 18 6)
+  </info>
+  <mis>
+
+  </mis>
+  <err>
+    <r>
+
+    </r>
+    <w>
+
+    </w>
+  </err>
+  <extra>
+  </extra>
+</env>
+<instr>
+(:ins
+    (:task (pickup X) (:cond (sort X can) (color X red)))
+    (:task (putin X Y) (:cond (sort X bottle) (color X green) (sort Y microwave) (type Y container)))
+    (:task (putin X Y) (:cond (sort X remotecontrol) (color X yellow) (sort Y refrigerator) (type Y container)))
+    (:task (close X) (:cond (sort X cupboard) (type X container)))
+    (:cons_not (:task (putin X Y) (:cond (sort X bottle) (color X green) (sort Y microwave) (type Y container))))
+    (:cons_not (:task (putin X Y) (:cond (sort X remotecontrol) (color X yellow) (sort Y refrigerator) (type Y container))))
+    (:cons_not (:task (close X) (:cond (sort X cupboard) (type X container))))
+    (:cons_not (:task (goto X) (:cond (sort X refrigerator))))
+    (:cons_not (:task (goto X) (:cond (sort X microwave))))
+    (:cons_not (:task (goto X) (:cond (sort X cupboard))))
+    (:cons_not (:task (goto X) (:cond (sort X desk))))
+    (:cons_not (:task (goto X) (:cond (sort X sofa))))
+    (:cons_not (:task (goto X) (:cond (sort X chair))))
+    (:cons_not (:task (goto X) (:cond (sort X table))))
+    (:cons_not (:task (goto X) (:cond (sort X workspace))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X white) (sort Y can) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X book) (color X blue) (sort Y can) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y can) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X bottle) (color X white) (sort Y can) (color Y red))))
+    (:cons_notnot (:info (near X Y) (:cond (sort X book) (color X green) (sort Y can) (color Y red))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X white) (sort Y human))))
+    (:cons_not (:info (near X Y) (:cond (sort X book) (color X blue) (sort Y chair))))
+    (:cons_not (:info (near X Y) (:cond (sort X cup) (color X black) (sort Y table))))
+)
+</instr>
+<nl>
+Pick up the red can.
+Put the green bottle in the microwave.
+Put the yellow remotecontrol in the refrigerator.
+Close the cupboard.
+Do not put the green bottle in the microwave.
+Do not put the yellow remotecontrol in the refrigerator.
+Do not close the cupboard.
+Do not go to the refrigerator.
+Do not go to the microwave.
+Do not go to the cupboard.
+Do not go to the desk.
+Do not go to the sofa.
+Do not go to the chair.
+Do not go to the table.
+Do not go to the workspace.
+The white cup must be near the red can.
+The blue book must be near the red can.
+The black cup must be near the red can.
+The white bottle must be near the red can.
+The green book must be near the red can.
+The white cup must not be near the human.
+The blue book must not be near the chair.
+The black cup must not be near the table.
+</nl>
+</test>
