@@ -1,0 +1,193 @@
+比赛分为两个阶段，每个阶段包含指令语言和自然语言两个子项目，各阶段比赛前每个队伍需提交30道
+题目，未提交队伍没有抽题资格。
+
+
+env(初始环境信息部分)
+第一阶段 mis 、 err 、 ans 均为 off ，第二阶段 mis 、 err 、 ans 均为 on 。
+
+  1. info各初始环境信息按物体编号顺序排列（编号不能出现断号情况，如11、 13......），规定
+    robot 编号为0 ， human 编号为1；
+
+  2. info 中各类物体（ robot 、小物体、大物体(包括 human)、容器）的完整信息表述如下（具体格
+   式见附录A）：
+
+   robot： 包 含 hold、 plate、 at字 段 ；
+   小物体：包含sort、size、color、at(或inside)字段；
+
+   大物体：包含sort、size、at字段；
+
+   容器：包含sort、size、at、type、opened(或closed)字段
+
+   注：（1）sort字段必须居首位，其余字段按照上述顺序；（2）在 mis 、 err 、 extra部分出现
+   的字段可以省略，否则每种类型物体的字段不能增加或减少；（3）在 robot 的hold或plate中的
+   小物体的at(或inside)字段可以省略；（4）初始环境信息中sort后的字段物体id和sort必须一致；
+
+  3. mis部分可以有小物体的at(或inside)字段、大物体的的 at字段、 robot 的 plate字段、容器的
+   opened(或closed)字段；
+
+  4. err部分可以有
+    （1）小物体的at(或inside)字段（ r 为at ， w 为at或inside； r 为inside ， w 为at或inside）；
+    （2）大物体的 at 字段（ r 为 at ， w 为 at ）；
+
+    （3） robot 的 plate 字段（ r 为 plate ， w 为 at 或 inside ）；
+
+    （4）容器的opened(或closed)字段（ r 为opened ， w 为closed； r 为closed ， w 为
+   opened）；
+
+  5. extra部分可以有小物体的at(或inside)字段、 robot 的plate字段(plate必须有小物体)、容器的
+   opened(或closed字段)。
+
+
+instr(指令语言部分)
+  1. 三种类型的任务（ info 、 task 、 cons ）具体格式见附录B；
+
+  2. extra处的信息平台不会给出， info用于补充 extra处的信息，具体如下：
+
+    （1） info 的on或near对应小物体的at字段；
+    （2） info 的inside对应小物体的inside字段；
+    （3） info 的plate对应 robot 的plate字段；
+    （4） info 的opened/closed分别对应容器的opened/closed字段
+
+  3. 多个 task 、 cons指令可以发生冲突，应舍小取大，合理规划得到最大分数；
+
+  4. 初始环境信息部分（info）、指令语言部分（instr）和自然语言部分（nl）凡涉及小物体必须要有
+     对应的颜色描述，规定所有小物体不能缺失颜色信息。
+
+  5. instr处常见格式错误总结如下：
+
+        cons指令最后四个括号，其他指令最后三个括号，不要增加或丢失；
+       指令中有一个物体时用 X 代替；有两个物体时第一个用 X 代替，第二个用 Y 代替；且 X 、 Y
+       大写，且不能互换位置；
+         (cons_notnot (:task错误；
+         (:ins最后的括号丢掉；
+         info、task、cons的关键词串用；
+         一开始的环境状态就破坏了约束，约束不会发生作用；
+         一个任务中不能同时出现两个小物体；
+         goto任务作用的物体可以是大物体或不在手爪、盘子或容器中的小物体。
+
+
+nl(自然语言部分)
+ 1. 具体格式见附录C；
+
+ 2. 自然语言指令和指令语言必须一一对应；
+
+ 3. 自然语言指令中的单词必须出自《2024中国机器人大赛家庭服务机器人仿真项目比赛规则》中自
+   然语言词汇表，且不能更改词义和词性；不能合并单词；
+
+ 4. 第二阶段允许在表示颜色的形容词、名词(详见附录A的物体及颜色词汇名单)中添加干扰字符（干
+  扰字符不能是英文句号、空格），如&、#等，两个阶段均允许字母大小写混杂；
+
+ 5. nl处常见格式错误总结如下：
+
+         不要丢失每句最后的英文句号；
+
+附录A
+
+//机器人
+(hold *) (plate *) (at 0 *)
+//小物体
+(sort * *) (size * small) (color * *) (at * *)
+(sort * *) (size * small) (color * *) (inside * *)
+//大物体
+(sort * *) (size * big) (at 0 *)
+//容器
+(sort * *) (size * big) (at * *) (type * container) (opened *)
+(sort * *) (size * big) (at * *) (type * container) (closed *)
+
+
+//物体及颜色词汇名单
+小物体
+book can remotecontrol bottle cup
+大物体
+human、 plant couch chair sofa bed table workspace
+worktable teapoy desk television airconditioner washmachine
+容器
+closet cupboard refrigerator microwave
+颜色
+white black yellow blue green red
+
+
+
+
+附录B
+
+1.INFO
+(:info (on X Y) (:cond (sort X *) (color X *) (sort Y *)))
+(:info (near X Y) (:cond (sort X *) (color X *) (sort Y *)))
+(:info (plate X) (:cond (sort X *) (color X *))))
+(:info (inside X Y) (:cond (sort X *) (color X *) (sort Y *)))
+(:info (opened X) (:cond (sort X *)))
+(:info (closed X) (:cond (sort X *)))
+2.TASK
+(:task (give human X) (:cond (sort X *) (color X *)))
+(:task (puton X Y) (:cond (sort X *) (color X *) (sort Y *)))
+(:task (goto X) (:cond (sort X *)))
+(:task (putdown X) (:cond (sort X *) (color X *)))
+(:task (pickup X) (:cond (sort X *) (color X *)))
+(:task (open X) (:cond (sort X *) (type X container)))
+(:task (close X) (:cond (sort X *) (type X container)))
+(:task (putin X Y) (:cond (sort X *) (color X *) (sort Y *) (type Y container)))
+(:task (takeout X Y) (:cond (sort X *) (color X *) (sort Y *) (type Y
+container)))
+
+
+
+
+3.CONS
+(1)NOT_TASK：
+(:cons_not (:task (give human X) (:cond (sort X *) (color X *))))
+(:cons_not (:task (puton X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_not (:task (goto X) (:cond (sort X *))))
+(:cons_not (:task (putdown X) (:cond (sort X *) (color X *))))
+(:cons_not (:task (pickup X) (:cond (sort X *) (color X *))))
+(:cons_not (:task (open X) (:cond (sort X *) (type X container))))
+(:cons_not (:task (close X) (:cond (sort X *) (type X container))))
+(:cons_not (:task (putin X Y) (:cond (sort X *) (color X *) (sort Y *) (type Y
+container))))
+(:cons_not (:task (takeout X Y) (:cond (sort X *) (color X *) (sort Y *) (type Y
+container))))
+
+
+(2)NOT_INFO：
+(:cons_not (:info (on X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_not (:info (near X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_not (:info (plate X) (:cond (sort X *) (color X *))))
+(:cons_not (:info (inside X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_not (:info (opened X) (:cond (sort X *))))
+(:cons_not (:info (closed X) (:cond (sort X *))))
+
+
+(3)NOTNOT_INFO：
+(:cons_notnot (:info (on X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_notnot (:info (near X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_notnot (:info (plate X) (:cond (sort X *) (color X *))))
+(:cons_notnot (:info (inside X Y) (:cond (sort X *) (color X *) (sort Y *))))
+(:cons_notnot (:info (opened X) (:cond (sort X *))))
+(:cons_notnot (:info (closed X) (:cond (sort X *))))
+
+
+
+附录C
+
+指令语言和自然语言对应关系
+//task
+give对应give human/me ... 或 give ... to human/me
+puton对应put...on/near/next to
+goto对应go to...
+putdown对应put...down
+pickup对应pick...up
+open对应open...
+close对应close...
+putin对应put...in
+takeout对应take...out
+//info句型:There is A...B 或 A is...B
+on/near对应on/near/next to...
+plate对应on the plate
+inside对应in.. .
+opened对应 ...is opened
+closed对应 ...is closed
+//cons
+cons_not task对应Do not task
+cons_not info对应must not be info
+cons_notnot info对应must be info
+
