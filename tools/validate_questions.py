@@ -17,6 +17,7 @@ from pathlib import Path
 
 TOKEN_RE = re.compile(r"\(|\)|[^\s()]+")
 FACT_RE = re.compile(r"\(([A-Za-z_]+)\s+([^()]*)\)")
+STAGE1_NL_RE = re.compile(r"^[A-Za-z.,\s]+$")
 
 
 Diagnostic = namedtuple("Diagnostic", ("severity", "path", "code", "message"))
@@ -72,6 +73,30 @@ def canonical(value):
 
 def element_text(element):
     return "" if element is None else "".join(element.itertext())
+
+
+def question_signatures(path):
+    try:
+        root = ET.parse(str(path)).getroot()
+    except (ET.ParseError, OSError):
+        return None
+    instr = root.find('instr')
+    nl = root.find('nl')
+    if instr is None or nl is None:
+        return None
+    try:
+        expressions = parse_sexpressions(element_text(instr).strip())
+        instr_signature = ' '.join(
+            canonical(normalize_tree(expression)) for expression in expressions
+        )
+    except SExprError:
+        instr_signature = ' '.join(element_text(instr).lower().split())
+    nl_signature = '\n'.join(
+        ' '.join(line.lower().split())
+        for line in element_text(nl).splitlines()
+        if line.strip()
+    )
+    return instr_signature, nl_signature
 
 
 def infer_stage(path, forced_stage):
@@ -226,6 +251,14 @@ def validate_file(path, forced_stage=None):
     for index, line in enumerate(nl_lines, start=1):
         if not line.endswith("."):
             add(diags, "error", path, "nl.period", "NL line %d must end with an English period" % index)
+        if stage == 1 and not STAGE1_NL_RE.fullmatch(line):
+            add(
+                diags,
+                "error",
+                path,
+                "nl.stage1-interference",
+                "Stage1 NL line %d contains a non-letter interference character" % index,
+            )
 
     seen_nl = {}
     for index, (kind, line) in enumerate(zip(child_types, nl_lines), start=1):
@@ -266,6 +299,11 @@ def parse_args(argv=None):
     parser.add_argument("--review-manifest", type=Path)
     parser.add_argument("--require-review", action="store_true")
     parser.add_argument("--json", type=Path, dest="json_output")
+    parser.add_argument(
+        '--require-unique-questions',
+        action='store_true',
+        help='reject repeated instruction or NL sets across question files',
+    )
     return parser.parse_args(argv)
 
 
@@ -283,6 +321,26 @@ def main(argv=None):
         diagnostics.extend(file_diags)
         if stage:
             stage_counts[stage] += 1
+
+    if args.require_unique_questions:
+        seen = {'instruction': {}, 'nl': {}}
+        for path in files:
+            signatures = question_signatures(path)
+            if signatures is None:
+                continue
+            for category, signature in zip(('instruction', 'nl'), signatures):
+                previous = seen[category].get(signature)
+                if previous is not None:
+                    diagnostics.append(
+                        Diagnostic(
+                            'error',
+                            path.as_posix(),
+                            'questions.duplicate-%s' % category,
+                            'duplicates %s from %s' % (category, previous.as_posix()),
+                        )
+                    )
+                else:
+                    seen[category][signature] = path
 
     if not files:
         diagnostics.append(Diagnostic("warning", args.root.as_posix(), "questions.empty", "no XML questions found"))
@@ -310,6 +368,8 @@ def main(argv=None):
             except ValueError:
                 key = path.as_posix()
             row = reviews.get(key)
+            if row is None and root_resolved.name.lower() in ('stage1', 'stage2'):
+                row = reviews.get((Path(root_resolved.name) / key).as_posix())
             if not row:
                 diagnostics.append(Diagnostic("error", path.as_posix(), "review.missing", "missing review manifest row"))
                 continue

@@ -29,3 +29,23 @@ stage2/27.xml,2,generated-advantage-candidates,,pending,new pickup target green 
 stage2/28.xml,2,generated-advantage-candidates,,pending,new pickup target yellow cup; final selected
 stage2/29.xml,2,generated-advantage-candidates,,pending,new pickup target white remotecontrol; final selected
 stage2/30.xml,2,generated-advantage-candidates,,pending,new pickup target blue remotecontrol; final selected
+stage1/01.xml,1,advantage-candidates,,pending,truth-normalized from stage2/05.xml; final school selection
+stage1/02.xml,1,advantage-candidates,,pending,truth-normalized from stage2/03.xml; replaces duplicate instruction set; final school selection
+stage1/03.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/29.xml; replaces duplicate instruction set; final school selection
+stage1/04.xml,1,advantage-candidates,,pending,truth-normalized from stage2/12.xml; final school selection
+stage1/05.xml,1,advantage-candidates,,pending,truth-normalized from stage2/10.xml; final school selection
+stage1/06.xml,1,advantage-candidates,,pending,truth-normalized from stage2/11.xml; final school selection
+stage1/07.xml,1,advantage-candidates,,pending,truth-normalized from stage2/09.xml; final school selection
+stage1/08.xml,1,advantage-candidates,,pending,truth-normalized from stage2/08.xml; final school selection
+stage1/09.xml,1,advantage-candidates,,pending,truth-normalized from stage2/01.xml; final school selection
+stage1/10.xml,1,advantage-candidates,,pending,truth-normalized from stage2/04.xml; final school selection
+stage1/11.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/26.xml; final school selection
+stage1/12.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/16.xml; final school selection
+stage1/13.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/21.xml; final school selection
+stage1/14.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/22.xml; final school selection
+stage1/15.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/24.xml; final school selection
+stage1/16.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/27.xml; final school selection
+stage1/17.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/30.xml; final school selection
+stage1/18.xml,1,advantage-candidates,,pending,truth-normalized from stage2/02.xml; final school selection
+stage1/19.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/23.xml; final school selection
+stage1/20.xml,1,generated-advantage-candidates,,pending,truth-normalized from stage2/19.xml; final school selection
