@@ -29,6 +29,36 @@ class ValidatorTests(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         return path
 
+    def test_cross_question_duplicates_are_rejected_when_required(self):
+        with tempfile.TemporaryDirectory() as root:
+            stage_root = Path(root) / 'stage1'
+            self.write_case(root, VALID_XML)
+            (stage_root / '02.xml').write_text(VALID_XML, encoding='utf-8')
+            result = validator.main([
+                str(stage_root),
+                '--stage', '1',
+                '--require-unique-questions',
+            ])
+            self.assertEqual(result, 1)
+
+    def test_stage_subdirectory_accepts_prefixed_review_key(self):
+        with tempfile.TemporaryDirectory() as root:
+            stage_root = Path(root) / 'stage1'
+            self.write_case(root, VALID_XML)
+            manifest = Path(root) / 'question-review.csv'
+            manifest.write_text(
+                'file,stage,author,reviewer,status,notes\n'
+                'stage1/01.xml,1,author,reviewer,approved,checked\n',
+                encoding='utf-8',
+            )
+            result = validator.main([
+                str(stage_root),
+                '--stage', '1',
+                '--review-manifest', str(manifest),
+                '--require-review',
+            ])
+            self.assertEqual(result, 0)
+
     def test_valid_structure_has_no_errors(self):
         with tempfile.TemporaryDirectory() as root:
             diagnostics, stage = validator.validate_file(self.write_case(root, VALID_XML))
@@ -54,6 +84,12 @@ class ValidatorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             diagnostics, _ = validator.validate_file(self.write_case(root, bad_flags))
             self.assertIn("stage.flags", {item.code for item in diagnostics})
+
+    def test_stage1_nl_interference_is_rejected(self):
+        interference = VALID_XML.replace("red book.", "r###ed book.")
+        with tempfile.TemporaryDirectory() as root:
+            diagnostics, _ = validator.validate_file(self.write_case(root, interference))
+            self.assertIn("nl.stage1-interference", {item.code for item in diagnostics})
 
 
 if __name__ == "__main__":
