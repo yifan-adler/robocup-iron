@@ -34,13 +34,17 @@ else
   errors=$((errors + 1))
 fi
 
-if uname -r | grep -Eqi '(microsoft-standard|wsl2)'; then
-  echo "OK: WSL2 kernel -> $(uname -r)"
+# Check runtime environment: support WSL2 and VMware
+if uname -r | grep -Eqi 'microsoft|wsl2'; then
+  echo "OK: Environment -> WSL2"
+
+elif [[ "$(systemd-detect-virt 2>/dev/null)" == "vmware" ]]; then
+  echo "OK: Environment -> VMware"
+
 else
-  echo "ERROR: WSL2 is required; kernel is $(uname -r)" >&2
+  echo "ERROR: WSL2 or VMware is required; kernel is $(uname -r)" >&2
   errors=$((errors + 1))
 fi
-
 for command_name in bash dos2unix git gcc g++ make cmake patch python3 sha256sum timeout unzip dpkg-query; do
   check_command "$command_name"
 done
@@ -89,4 +93,4 @@ if [[ $errors -ne 0 ]]; then
   echo "Doctor found $errors problem(s)" >&2
   exit 1
 fi
-echo "WSL2 Ubuntu 18.04 prerequisites look ready"
+echo "Ubuntu 18.04 prerequisites look ready"
