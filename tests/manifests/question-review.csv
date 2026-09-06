@@ -1,13 +1,31 @@
 file,stage,author,reviewer,status,notes
-stage2/01.xml,2,Codex-assisted,,pending,MustNear correction anchor
-stage2/02.xml,2,Codex-assisted,,pending,MustNear correction anchor
-stage2/03.xml,2,Codex-assisted,,pending,MustNear correction anchor
-stage2/04.xml,2,Codex-assisted,,pending,MustNear correction anchor
-stage2/05.xml,2,Codex-assisted,,pending,Two missing locations and multi-goto aggregation
-stage2/06.xml,2,Codex-assisted,,pending,Three missing locations and multi-goto aggregation
-stage2/07.xml,2,Codex-assisted,,pending,Four missing locations and multi-goto aggregation
-stage2/08.xml,2,Codex-assisted,,pending,Selective pickup with constraint preservation
-stage2/09.xml,2,Codex-assisted,,pending,Selective pickup with constraint preservation
-stage2/10.xml,2,Codex-assisted,,pending,Container task conflict filtering
-stage2/11.xml,2,Codex-assisted,,pending,Container task conflict filtering
-stage2/12.xml,2,Codex-assisted,,pending,Missing-location hybrid multi-goto
+stage2/01.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 01.xml; final selected
+stage2/02.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 02.xml; final selected
+stage2/03.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 03.xml; final selected
+stage2/04.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 04.xml; final selected
+stage2/05.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 05.xml; final selected
+stage2/06.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 06.xml; final selected
+stage2/07.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 07.xml; final selected
+stage2/08.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 08.xml; final selected
+stage2/09.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 09.xml; final selected
+stage2/10.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 10.xml; final selected
+stage2/11.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 11.xml; final selected
+stage2/12.xml,2,advantage-candidates,,pending,from questions/12-advantage-candidates 12.xml; final selected
+stage2/13.xml,2,legacy-2025-adapted,,pending,from realcompetiton/04.xml; final selected
+stage2/14.xml,2,legacy-2025-adapted,,pending,from realcompetiton/05.xml; final selected
+stage2/15.xml,2,legacy-2025-adapted,,pending,from realcompetiton/08.xml; final selected
+stage2/16.xml,2,generated-advantage-candidates,,pending,new pickup target white book; final selected
+stage2/17.xml,2,generated-advantage-candidates,,pending,new pickup target red book; final selected
+stage2/18.xml,2,generated-advantage-candidates,,pending,new pickup target yellow book; final selected
+stage2/19.xml,2,generated-advantage-candidates,,pending,new pickup target black book; final selected
+stage2/20.xml,2,generated-advantage-candidates,,pending,new pickup target red bottle; final selected
+stage2/21.xml,2,generated-advantage-candidates,,pending,new pickup target yellow bottle; final selected
+stage2/22.xml,2,generated-advantage-candidates,,pending,new pickup target black bottle; final selected
+stage2/23.xml,2,generated-advantage-candidates,,pending,new pickup target white can; final selected
+stage2/24.xml,2,generated-advantage-candidates,,pending,new pickup target yellow can; final selected
+stage2/25.xml,2,generated-advantage-candidates,,pending,new pickup target black can; final selected
+stage2/26.xml,2,generated-advantage-candidates,,pending,new pickup target blue cup; final selected
+stage2/27.xml,2,generated-advantage-candidates,,pending,new pickup target green cup; final selected
+stage2/28.xml,2,generated-advantage-candidates,,pending,new pickup target yellow cup; final selected
+stage2/29.xml,2,generated-advantage-candidates,,pending,new pickup target white remotecontrol; final selected
+stage2/30.xml,2,generated-advantage-candidates,,pending,new pickup target blue remotecontrol; final selected
