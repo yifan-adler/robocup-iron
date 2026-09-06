@@ -27,11 +27,17 @@ if [[ "$(uname -m)" != "x86_64" ]]; then
   echo "ERROR: x86_64 is required; found $(uname -m)" >&2
   exit 1
 fi
-if ! uname -r | grep -Eqi '(microsoft-standard|wsl2)'; then
-  echo "ERROR: WSL2 is required; kernel is $(uname -r)" >&2
+# Check runtime environment: support WSL2 and VMware
+if uname -r | grep -Eqi 'microsoft|wsl2'; then
+  echo "Environment: WSL2"
+
+elif [[ "$(systemd-detect-virt 2>/dev/null)" == "vmware" ]]; then
+  echo "Environment: VMware"
+
+else
+  echo "ERROR: WSL2 or VMware is required; kernel is $(uname -r)" >&2
   exit 1
 fi
-
 if [[ $EUID -eq 0 ]]; then
   sudo_cmd=()
 elif command -v sudo >/dev/null 2>&1; then
