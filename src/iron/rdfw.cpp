@@ -1639,7 +1639,11 @@ bool RDFW::SolveTask_TakeOut(unsigned int a, unsigned int b)
 
 
     auto target_cont = ObjectPtrCast<Container>(objects[b]);
-    if (small->inside != target_cont->id && small->inside!=UNKNOWN)
+    // Stage 2 location facts and AskLoc replies may be misleading. A known
+    // "at" reply therefore does not prove that the object is outside this
+    // container; verify by trying the target container instead. Stage 1 has
+    // reliable state and can keep the zero-cost shortcut.
+    if (stage == 1 && small->inside != target_cont->id && small->inside != UNKNOWN)
     {
          return true;
     }
@@ -2322,11 +2326,10 @@ bool RDFW::IsZeroActionSatisfy(const Instruction& t) const
         return (s && c && s->inside == c->id); // 已在容器中
     }
     if (bh == "takeout") {
-        if (!X0 || !Y0) return false;
-        auto s = std::dynamic_pointer_cast<SmallObject>(X0);
-        auto c = std::dynamic_pointer_cast<Container>(Y0);
-        // “拿出”若已经不在该容器里（包含 UNKNOWN/NONE 或在其它容器），则视作已满足
-        return (s && c && s->inside != c->id);
+        // Stage 2 may deliberately provide a false "at"/"inside" relation.
+        // Without relation provenance, no cached state is strong enough to
+        // declare takeout complete without checking the target container.
+        return false;
     }
     if (bh == "puton") {
         if (!X0 || !Y0) return false;
@@ -4409,6 +4412,5 @@ void RDFW::ApplyOpenCloseCorrection() {
         // 无约束不处理
     }
 }
-
 
 
