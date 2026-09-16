@@ -2,6 +2,8 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck disable=SC1091
+source "$repo_root/config/platform.env"
 errors=0
 
 check_command() {
@@ -71,17 +73,17 @@ case "$repo_root" in
     ;;
 esac
 
-archive="$repo_root/archive/legacy-2025/代码/Planner-release-2025(1).zip"
+archive="$repo_root/$PLATFORM_ARCHIVE_RELATIVE"
 if [[ -f "$archive" ]]; then
   actual="$(sha256sum "$archive" 2>/dev/null | awk '{print $1}' || true)"
-  if [[ "$actual" == "fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150" ]]; then
-    echo "OK: official platform archive SHA256"
+  if [[ "$actual" == "$PLATFORM_ARCHIVE_SHA256" ]]; then
+    echo "OK: official platform $PLATFORM_RELEASE archive SHA256"
   else
-    echo "ERROR: official platform archive is missing or changed" >&2
+    echo "ERROR: official platform $PLATFORM_RELEASE archive is missing or changed" >&2
     errors=$((errors + 1))
   fi
 else
-  echo "ERROR: official platform archive not found" >&2
+  echo "ERROR: official platform $PLATFORM_RELEASE archive not found: $archive" >&2
   errors=$((errors + 1))
 fi
 

@@ -7,14 +7,14 @@ Windows 10/11 x64
         ↓ WSL2
 Ubuntu 18.04 x86_64
         ↓
-官方 cserver + libasp + iclingo
+2026 官方 cserver + libasp + iclingo
         ↓
 official example / Iron RDFW
         ↓
 固定 XML、参数、日志和 summary.json
 ```
 
-本项目是离散规划仿真，不需要 ROS、视觉、CUDA 或 GPU。Ubuntu 18.04 用于匹配官方平台和预编译库的 ABI，不作为通用日常系统。
+本项目是离散规划仿真，不需要 ROS、视觉、CUDA 或 GPU。2026 赛事规则明确指定 Ubuntu 18.04；附件中的预编译文件反而依赖更高版本运行库，因此默认从官方源码重编译，不把该发行版作为通用日常系统。
 
 ## 2. Windows 侧安装 Ubuntu 18.04
 
@@ -121,19 +121,23 @@ cd ~/robocup-iron
 ./scripts/build.sh --client iron
 ```
 
-`bootstrap.sh` 校验官方归档：
+`bootstrap.sh` 按 `config/platform.env` 校验当前官方归档：
 
 ```text
-archive/legacy-2025/代码/Planner-release-2025(1).zip
-SHA256 fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150
+archive/official-2026/EvaluationEnvironment.zip
+SHA256 fe41ba5f892ca479af8f15f4526780b2a25a82a4951e12206e7be6abb40e6a24
 ```
 
-解压源位于 `.work/planner-2025/`，official 和 Iron 分别使用独立工作副本。环境版本记录写入：
+解压源位于 `.work/evaluation-2026/`，official 和 Iron 分别使用带版本号的独立工作副本。环境版本记录写入：
 
 ```text
-.work/environment/official.txt
-.work/environment/iron.txt
+.work/environment/official-2026.txt
+.work/environment/iron-2026.txt
 ```
+
+2026 与 2025 的 SDK 头文件和示例接口一致，现有 Iron 源码无需接口迁移；附件中发生变化的是预编译平台文件和 `v*.lp` 验证规则。旧 2025 平台包仅保留为历史证据，不再参与默认构建和运行。
+
+附件中的预编译 `cserver` 依赖 GLIBC 2.38、GLIBCXX 3.4.32 和 CXXABI 1.3.13，不能在 2026 赛事规则指定的 Ubuntu 18.04 LTS 上直接运行。`build.sh` 因此使用当届包内源码在目标环境重编译 `cserver`、`validator`、评分库和客户端，同时保留 2026 的资源及验证规则。这也是四模式复现的默认路径。
 
 ## 7. 运行和结果
 
@@ -198,7 +202,7 @@ python3 tools/validate_questions.py tests/problems \
 | 环境被识别为 Ubuntu 26.04 等版本 | 使用 `wsl -d Ubuntu-18.04`，不要在默认发行版误跑 |
 | `apt-get update` 的 Bionic 源缺失 | 核查原因后使用 `--repair-sources` |
 | `/usr/bin/env: bash\r` | 确认 Git 属性；仅对受影响文件使用 `dos2unix`，不要全仓转换 |
-| `.work/planner-2025 exists without the expected stamp` | 确认它只是失败缓存后移走，再重新 bootstrap |
+| `.work/evaluation-2026 exists without the expected stamp` | 确认它只是失败缓存后移走，再重新 bootstrap |
 | CMake 找不到 Boost | 重新运行 setup 和 doctor，确认没有混用其他发行版工具链 |
 | cserver 一直等待 | 检查残留进程、客户端日志、模式、题号与 timeout |
 | 分数为空 | 查看 server/platform log；`null` 不能解释为 0 分 |

@@ -2,9 +2,12 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-archive_path="$repo_root/archive/legacy-2025/代码/Planner-release-2025(1).zip"
-expected_sha="fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150"
-target="$repo_root/.work/planner-2025"
+# shellcheck disable=SC1091
+source "$repo_root/config/platform.env"
+
+archive_path="$repo_root/$PLATFORM_ARCHIVE_RELATIVE"
+expected_sha="$PLATFORM_ARCHIVE_SHA256"
+target="$repo_root/$PLATFORM_EXTRACT_DIR_RELATIVE"
 stamp="$target/.archive.sha256"
 
 if [[ ! -f "$archive_path" ]]; then
@@ -34,7 +37,7 @@ mkdir -p "$target"
 unzip -q "$archive_path" -d "$target"
 printf '%s\n' "$expected_sha" > "$stamp"
 
-platform_root="$target/Planner-release-2025/Planner-release-ubuntu18"
+platform_root="$target/$PLATFORM_ROOT_RELATIVE"
 for required in CMakeLists.txt bin/cserver lib/libasp.so res/iclingo include/cserver/plug.hpp; do
   if [[ ! -e "$platform_root/$required" ]]; then
     echo "ERROR: extracted platform is missing $required" >&2
@@ -43,4 +46,4 @@ for required in CMakeLists.txt bin/cserver lib/libasp.so res/iclingo include/cse
 done
 
 chmod +x "$platform_root/bin/cserver" "$platform_root/res/iclingo" || true
-echo "Platform bootstrapped and verified at $platform_root"
+echo "Platform $PLATFORM_RELEASE bootstrapped and verified at $platform_root"

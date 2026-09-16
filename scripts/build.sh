@@ -26,13 +26,21 @@ fi
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 "$repo_root/scripts/bootstrap.sh"
+# shellcheck disable=SC1091
+source "$repo_root/config/platform.env"
 
-source_platform="$repo_root/.work/planner-2025/Planner-release-2025/Planner-release-ubuntu18"
-platform="$repo_root/.work/platform-$client"
-build_dir="$repo_root/.work/build-$client"
+source_platform="$repo_root/$PLATFORM_EXTRACT_DIR_RELATIVE/$PLATFORM_ROOT_RELATIVE"
+platform="$repo_root/.work/platform-$PLATFORM_CACHE_TAG-$client"
+build_dir="$repo_root/.work/build-$PLATFORM_CACHE_TAG-$client"
+platform_stamp="$platform/.archive.sha256"
 
 if [[ ! -d "$platform" ]]; then
   cp -a "$source_platform" "$platform"
+  printf '%s\n' "$PLATFORM_ARCHIVE_SHA256" > "$platform_stamp"
+elif [[ ! -f "$platform_stamp" ]] \
+  || [[ "$(tr -d '\r\n' < "$platform_stamp")" != "$PLATFORM_ARCHIVE_SHA256" ]]; then
+  echo "ERROR: $platform is not a verified $PLATFORM_RELEASE working copy; move it aside and retry" >&2
+  exit 1
 fi
 
 if [[ "$client" == "iron" ]]; then
@@ -61,7 +69,8 @@ mkdir -p "$build_dir" "$repo_root/.work/environment"
 
 {
   echo "client=$client"
-  echo "platform_archive_sha256=fdb9cf54054aaac0ccbfbeabc97a99d0067dc975f0999a90f81fe83a326ac150"
+  echo "platform_release=$PLATFORM_RELEASE"
+  echo "platform_archive_sha256=$PLATFORM_ARCHIVE_SHA256"
   if [[ -r /etc/os-release ]]; then
     grep -E '^(PRETTY_NAME|VERSION_ID|VERSION_CODENAME)=' /etc/os-release
   fi
@@ -74,7 +83,7 @@ mkdir -p "$build_dir" "$repo_root/.work/environment"
   dpkg-query -W -f='${binary:Package}=${Version}\n' \
     build-essential cmake coreutils dos2unix git libboost-dev patch procps python3 unzip \
     2>/dev/null | sort || true
-} > "$repo_root/.work/environment/$client.txt"
+} > "$repo_root/.work/environment/$client-$PLATFORM_CACHE_TAG.txt"
 
 if [[ ! -x "$platform/bin/example" || ! -x "$platform/bin/cserver" ]]; then
   echo "ERROR: build finished without bin/example or bin/cserver" >&2
