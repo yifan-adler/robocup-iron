@@ -8,8 +8,9 @@
 
 - 主分支：`main`
 - 临时基线：2025 国赛 Stage2 候选包，详见 `src/iron/BASELINE.md`
+- 官方评测平台：2026 `EvaluationEnvironment.zip`（SHA256 `fe41ba5f…e6a24`）
 - 目标运行时：WSL2、Ubuntu 18.04、x86_64、C++11
-- 原始资料：只读保存在 `archive/legacy-2025/`
+- 原始资料：2025 历史证据只读保存在 `archive/legacy-2025/`，2026 官方环境原包保存在 `archive/official-2026/`
 - 校赛硬截止：2026-09-10；计划 09-08 冻结、09-09 彩排
 
 ## 首次环境安装
@@ -96,7 +97,9 @@ Robocup/
 ├─ AGENTS.md
 ├─ README.md
 ├─ archive/legacy-2025/       # 只读历史证据
+├─ archive/official-2026/     # 2026 官方评测环境原包
 ├─ config/modes/              # 四种固定参数
+├─ config/platform.env        # 当前官方平台版本、路径与校验值
 ├─ docs/                      # 环境、规则、计划与 onboarding
 ├─ infra/patches/             # 可审查的平台工作副本补丁
 ├─ scripts/                   # 安装、诊断、构建和 runner
@@ -117,7 +120,7 @@ Robocup/
 
 ## 已知风险
 
-- Ubuntu 18.04 已超出标准维护期，仅因官方平台 ABI 和比赛工具链要求继续使用；该发行版只用于本项目。
+- Ubuntu 18.04 已超出标准维护期，仅因 2026 赛事规则和比赛工具链要求继续使用；附件预编译平台依赖更高版本 GLIBC，必须在 18.04 中从官方源码重编译。
 - 候选包尚未被上届确认成正式提交版本。
 - 历史代码仍有任务索引悬空指针、未初始化重试计数、无界 AskLoc、ID/位置混用和 multi-goto 风险；先冻结分数基线再逐项修复。
 - 2026 规则要求同题不得重复任务和约束，少题或格式错误可能每题扣 500 分，且负分不清零。

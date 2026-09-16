@@ -15,9 +15,19 @@ class BuildSummaryTests(unittest.TestCase):
             "server_exit": 0,
             "client_exit": 0,
             "server_stopped_by_runner": False,
+            "question_path": "/repo/tests/problems/stage1/01.xml",
+            "question_sha256": "abc123",
         }
         values.update(overrides)
         return build_summary(**values)
+
+    def test_records_question_identity(self):
+        summary = self.build("# Score: 200")
+        self.assertEqual(
+            summary["question_path"],
+            "/repo/tests/problems/stage1/01.xml",
+        )
+        self.assertEqual(summary["question_sha256"], "abc123")
 
     def test_parses_platform_score(self):
         summary = self.build("# Result:\n# Score: 200\n")

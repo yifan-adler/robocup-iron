@@ -37,8 +37,10 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 mode_config="$repo_root/config/modes/stage${stage}-${mode}.env"
 # shellcheck disable=SC1090
 source "$mode_config"
+# shellcheck disable=SC1091
+source "$repo_root/config/platform.env"
 
-platform="$repo_root/.work/platform-$client"
+platform="$repo_root/.work/platform-$PLATFORM_CACHE_TAG-$client"
 if [[ ! -x "$platform/bin/example" || ! -x "$platform/bin/cserver" ]]; then
   echo "ERROR: $client is not built; run scripts/build.sh --client $client first" >&2
   exit 1
@@ -51,10 +53,16 @@ elif [[ "$tests_dir" != /* ]]; then
   tests_dir="$repo_root/$tests_dir"
 fi
 
-if [[ ! -f "$tests_dir/$case_id.xml" ]]; then
-  echo "ERROR: test case not found: $tests_dir/$case_id.xml" >&2
+question_path="$tests_dir/$case_id.xml"
+if [[ ! -f "$question_path" ]]; then
+  echo "ERROR: test case not found: $question_path" >&2
   exit 1
 fi
+
+question_path="$(readlink -f "$question_path")"
+question_sha256="$(sha256sum "$question_path" | awk '{print $1}')"
+echo "Question path: $question_path"
+echo "Question SHA-256: $question_sha256"
 if [[ ! -f "$tests_dir/test.list" ]]; then
   echo "ERROR: test list not found: $tests_dir/test.list" >&2
   exit 1
@@ -86,7 +94,11 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-start_ns="$(date +%s%N)"
+monotonic_ns() {
+  python3 -c 'import time; print(int(time.monotonic() * 1000000000))'
+}
+
+start_ns="$(monotonic_ns)"
 set +e
 (
   cd "$platform/bin"
@@ -122,7 +134,7 @@ server_exit=$?
 server_pid=""
 set -e
 
-end_ns="$(date +%s%N)"
+end_ns="$(monotonic_ns)"
 duration_ms=$(( (end_ns - start_ns) / 1000000 ))
 
 summary_args=(
@@ -131,6 +143,8 @@ summary_args=(
   --mode "$mode"
   --case "$case_id"
   --client "$client"
+  --question-path "$question_path"
+  --question-sha256 "$question_sha256"
   --duration-ms "$duration_ms"
   --server-exit "$server_exit"
   --client-exit "$client_exit"

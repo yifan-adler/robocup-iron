@@ -1,5 +1,6 @@
 # Local extraction, build, and run artifacts
 .work/
+tmp/
 build/
 build-*/
 cmake-build-*/

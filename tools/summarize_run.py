@@ -25,6 +25,8 @@ def parse_args():
     parser.add_argument("--duration-ms", required=True, type=int)
     parser.add_argument("--server-exit", required=True, type=int)
     parser.add_argument("--client-exit", required=True, type=int)
+    parser.add_argument("--question-path")
+    parser.add_argument("--question-sha256")
     parser.add_argument("--server-stopped-by-runner", action="store_true")
     return parser.parse_args()
 
@@ -42,7 +44,7 @@ def read_logs(run_dir):
 
 def build_summary(text, stage, mode, case_id, client, duration_ms,
                   server_exit, client_exit, server_stopped_by_runner=False,
-                  action_text=None):
+                  action_text=None, question_path=None, question_sha256=None):
     scores = [int(value) for value in SCORE_RE.findall(text)]
     raw_score = scores[-1] if scores else None
     official_score = min(raw_score, 1000) if raw_score is not None else None
@@ -57,6 +59,8 @@ def build_summary(text, stage, mode, case_id, client, duration_ms,
         "mode": mode,
         "case": case_id,
         "client": client,
+        "question_path": question_path,
+        "question_sha256": question_sha256,
         "duration_ms": duration_ms,
         "server_exit": server_exit,
         "client_exit": client_exit,
@@ -86,6 +90,8 @@ def main():
         client_exit=args.client_exit,
         server_stopped_by_runner=args.server_stopped_by_runner,
         action_text=platform_text or text,
+        question_path=args.question_path,
+        question_sha256=args.question_sha256,
     )
     output = args.run_dir / "summary.json"
     output.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
